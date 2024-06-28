@@ -13,9 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: HomeViewController())
-        window?.makeKeyAndVisible()
+        if #available(iOS 13.0, *) {
+            // Configuração do UIWindow no SceneDelegate
+        } else {
+            // Configuração do UIWindow para iOS 12 ou anterior
+            window = UIWindow(frame: UIScreen.main.bounds)
+            let navController = UINavigationController(rootViewController: HomeViewController())
+            window?.rootViewController = navController
+            window?.makeKeyAndVisible()
+        }
         return true
     }
 }
