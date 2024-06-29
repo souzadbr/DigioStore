@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
-
 import UIKit
 
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -18,7 +17,6 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "userAvatar")
-        
         return imageView
     }()
 
@@ -39,25 +37,25 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }()
     
     private let digioCashLabel: UILabel = {
-            let label = UILabel()
-            let attributedText = NSMutableAttributedString(
-                string: "digio ",
-                attributes: [
-                    .font: UIFont.boldSystemFont(ofSize: 24),
-                    .foregroundColor: UIColor.black
-                ]
-            )
-            attributedText.append(NSAttributedString(
-                string: "Cash",
-                attributes: [
-                    .font: UIFont.boldSystemFont(ofSize: 24),
-                    .foregroundColor: UIColor.darkGray
-                ]
-            ))
-            label.attributedText = attributedText
-            label.translatesAutoresizingMaskIntoConstraints = false
-            return label
-        }()
+        let label = UILabel()
+        let attributedText = NSMutableAttributedString(
+            string: "digio ",
+            attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 20),
+                .foregroundColor: UIColor.black
+            ]
+        )
+        attributedText.append(NSAttributedString(
+            string: "Cash",
+            attributes: [
+                .font: UIFont.boldSystemFont(ofSize: 20),
+                .foregroundColor: UIColor.darkGray
+            ]
+        ))
+        label.attributedText = attributedText
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     
     private let cashBannerImageView: UIImageView = {
         let imageView = UIImageView()
@@ -72,7 +70,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     private let productsLabel: UILabel = {
         let label = UILabel()
         label.text = "Produtos"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -159,17 +157,17 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
             mainStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: 40),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             spotlightCollectionView.heightAnchor.constraint(equalToConstant: 200),
             cashBannerImageView.heightAnchor.constraint(equalToConstant: 120),
-            cashBannerImageView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 5),
-            cashBannerImageView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -5),
-            productsCollectionView.heightAnchor.constraint(equalToConstant: 200),
+            cashBannerImageView.leadingAnchor.constraint(equalTo: cashStackView.leadingAnchor, constant: 0),
+            cashBannerImageView.trailingAnchor.constraint(equalTo: cashStackView.trailingAnchor, constant: 0),
+            productsCollectionView.heightAnchor.constraint(equalToConstant: 100), // Ajustar altura conforme necessário
             
-            extraSpaceView.heightAnchor.constraint(equalToConstant: 20)
+            extraSpaceView.heightAnchor.constraint(equalToConstant: 20) // Adicionar altura fixa para o espaço extra
         ])
     }
 
@@ -239,12 +237,15 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         if collectionView == spotlightCollectionView {
             return CGSize(width: view.frame.width - 32, height: 200) // Ocupa toda a largura da tela com margem
         } else if collectionView == productsCollectionView {
-            return CGSize(width: 100, height: 100) // Ajuste o tamanho conforme necessário
+            return CGSize(width: 100, height: 100) // Diminuir o tamanho das células
         }
         return CGSize(width: 200, height: 200)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        if collectionView == productsCollectionView {
+            return 15 // Adicionar espaçamento entre as células
+        }
         return 16
     }
 }
