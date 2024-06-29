@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
-
 import UIKit
 
 class SpotlightCell: UICollectionViewCell {
@@ -29,7 +28,7 @@ class SpotlightCell: UICollectionViewCell {
         contentView.layer.shadowRadius = 4
         contentView.layer.cornerRadius = 15
         contentView.layer.masksToBounds = false
-
+        
         // Add imageView to contentView
         contentView.addSubview(imageView)
         NSLayoutConstraint.activate([
