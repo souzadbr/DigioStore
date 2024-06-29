@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol Coordinator {
+    var navigationController: UINavigationController { get set }
+    func start()
+}
 
 class MainCoordinator: Coordinator {
     var navigationController: UINavigationController
@@ -22,8 +26,9 @@ class MainCoordinator: Coordinator {
     }
 
     func showProductDetail(with product: Products) {
+        let viewModel = ProductDetailViewModel(product: product)
         let detailVC = ProductDetailViewController()
-        detailVC.product = product
+        detailVC.viewModel = viewModel
         navigationController.pushViewController(detailVC, animated: true)
     }
 }
