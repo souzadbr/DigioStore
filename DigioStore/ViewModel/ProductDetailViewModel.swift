@@ -4,12 +4,11 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
-
 import Foundation
 import UIKit
 
 class ProductDetailViewModel {
-
+    
     private var product: Products
     
     var productName: String {
@@ -51,4 +50,3 @@ class ProductDetailViewModel {
         task.resume()
     }
 }
-

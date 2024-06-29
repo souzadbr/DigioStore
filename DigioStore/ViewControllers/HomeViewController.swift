@@ -10,11 +10,11 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     var coordinator: MainCoordinator?
     private let viewModel = HomeViewModel()
     private let homeView = HomeView()
-
+    
     override func loadView() {
         view = homeView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -34,14 +34,14 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             }
         }
     }
-
+    
     private func setupBindings() {
         homeView.avatarImageView.image = viewModel.avatarImage
         homeView.greetingLabel.text = viewModel.greetingText
         homeView.digioCashLabel.attributedText = viewModel.digioCashText
         homeView.productsLabel.text = viewModel.productsLabelText
     }
-
+    
     private func updateUI() {
         if let url = viewModel.cashBannerURL() {
             loadImage(from: url, into: homeView.cashBannerImageView)
@@ -49,7 +49,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         homeView.spotlightCollectionView.reloadData()
         homeView.productsCollectionView.reloadData()
     }
-
+    
     private func loadImage(from url: URL, into imageView: UIImageView) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else { return }
@@ -59,7 +59,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         task.resume()
     }
-
+    
     // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == homeView.spotlightCollectionView {
@@ -69,7 +69,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == homeView.spotlightCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath) as! SpotlightCell
@@ -86,7 +86,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return UICollectionViewCell()
     }
-
+    
     // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == homeView.productsCollectionView {
@@ -94,7 +94,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             coordinator?.showProductDetail(with: product)
         }
     }
-
+    
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == homeView.spotlightCollectionView {
@@ -104,7 +104,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return CGSize(width: 200, height: 200) // Valor padrão para o caso de erro
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == homeView.productsCollectionView {
             return 15

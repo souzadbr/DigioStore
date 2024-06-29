@@ -4,25 +4,24 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
-
 import UIKit
 
 class ProductDetailView: UIView {
-    
+
     let productImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
-    
+
     let productNameLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 24)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     let productDescriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -42,7 +41,7 @@ class ProductDetailView: UIView {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -84,4 +83,3 @@ class ProductDetailView: UIView {
         ])
     }
 }
-
