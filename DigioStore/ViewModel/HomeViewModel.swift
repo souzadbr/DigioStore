@@ -7,7 +7,22 @@
 import Foundation
 import UIKit
 
-class HomeViewModel {
+protocol HomeViewModelProtocol: AnyObject {
+    var avatarImage: UIImage? { get }
+    var greetingText: String { get }
+    var digioCashText: NSAttributedString { get }
+    var productsLabelText: String { get }
+    var spotlightCount: Int { get }
+    var productsCount: Int { get }
+    
+    func spotlightURL(at index: Int) -> URL?
+    func productURL(at index: Int) -> URL?
+    func product(at index: Int) -> Products?
+    func fetchDigioStore(completion: @escaping () -> Void)
+    func cashBannerURL() -> URL?
+}
+
+class HomeViewModel: HomeViewModelProtocol {
     private var digioStore: DigioStore?
     
     var avatarImage: UIImage? {

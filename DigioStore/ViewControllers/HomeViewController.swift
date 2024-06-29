@@ -6,10 +6,20 @@
 //
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UIViewController {
     var coordinator: MainCoordinator?
-    private let viewModel = HomeViewModel()
-    private let homeView = HomeView()
+    private var viewModel: HomeViewModelProtocol
+    private let homeView: HomeView
+    
+    init(viewModel:HomeViewModelProtocol){
+        self.viewModel =  viewModel
+        self.homeView = HomeView(homeViewModel: viewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = homeView
@@ -18,49 +28,20 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        setupBindings()
+        homeView.setupBindings()
         
         homeView.spotlightCollectionView.dataSource = self
         homeView.spotlightCollectionView.delegate = self
+        
         homeView.productsCollectionView.dataSource = self
         homeView.productsCollectionView.delegate = self
         
-        homeView.spotlightCollectionView.register(SpotlightCell.self, forCellWithReuseIdentifier: SpotlightCell.reuseIdentifier)
-        homeView.productsCollectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
-        
-        viewModel.fetchDigioStore { [weak self] in
-            DispatchQueue.main.async {
-                self?.updateUI()
-            }
-        }
+        homeView.fetchUpdateUI()
     }
-    
-    private func setupBindings() {
-        homeView.avatarImageView.image = viewModel.avatarImage
-        homeView.greetingLabel.text = viewModel.greetingText
-        homeView.digioCashLabel.attributedText = viewModel.digioCashText
-        homeView.productsLabel.text = viewModel.productsLabelText
-    }
-    
-    private func updateUI() {
-        if let url = viewModel.cashBannerURL() {
-            loadImage(from: url, into: homeView.cashBannerImageView)
-        }
-        homeView.spotlightCollectionView.reloadData()
-        homeView.productsCollectionView.reloadData()
-    }
-    
-    private func loadImage(from url: URL, into imageView: UIImageView) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
-            DispatchQueue.main.async {
-                imageView.image = UIImage(data: data)
-            }
-        }
-        task.resume()
-    }
-    
-    // MARK: - UICollectionViewDataSource
+}
+
+// MARK: - UICollectionViewDataSource
+extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == homeView.spotlightCollectionView {
             return viewModel.spotlightCount
@@ -86,8 +67,11 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return UICollectionViewCell()
     }
+}
+
+// MARK: - UICollectionViewDelegate
+extension HomeViewController: UICollectionViewDelegate {
     
-    // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == homeView.productsCollectionView {
             guard let product = viewModel.product(at: indexPath.item) else { return }
@@ -95,7 +79,11 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
-    // MARK: - UICollectionViewDelegateFlowLayout
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == homeView.spotlightCollectionView {
             return CGSize(width: view.frame.width - 32, height: 200)
@@ -112,4 +100,3 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         return 16
     }
 }
-

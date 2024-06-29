@@ -17,6 +17,7 @@ class ProductDetailView: UIView {
 
     let productNameLabel: UILabel = {
         let label = UILabel()
+        label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 24)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -25,6 +26,7 @@ class ProductDetailView: UIView {
     let productDescriptionLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -38,6 +40,7 @@ class ProductDetailView: UIView {
     let enableProductLabel: UILabel = {
         let label = UILabel()
         label.text = "Habilitar Produto"
+        label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

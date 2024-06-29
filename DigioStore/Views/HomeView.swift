@@ -8,23 +8,19 @@ import UIKit
 
 class HomeView: UIView {
     
-    let avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.layer.cornerRadius = 30
-        imageView.clipsToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
+    private weak var homeViewModel: HomeViewModelProtocol?
     
-    let greetingLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private let avatarImageView: UIImageView
+    private let greetingLabel: UILabel
+    private let digioCashLabel: UILabel
+    private let cashBannerImageView: UIImageView
+    private let productsLabel: UILabel
+    private let headerStackView: UIStackView
+    private let mainStackView: UIStackView
+    private let cashStackView: UIStackView
+    private let extraSpaceView: UIView
     
-    let spotlightCollectionView: UICollectionView = {
+    internal let spotlightCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -32,30 +28,7 @@ class HomeView: UIView {
         return collectionView
     }()
     
-    let digioCashLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let cashBannerImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.layer.cornerRadius = 25
-        imageView.clipsToBounds = true
-        imageView.layer.masksToBounds = true
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-    
-    let productsLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    let productsCollectionView: UICollectionView = {
+    internal let productsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -63,48 +36,67 @@ class HomeView: UIView {
         return collectionView
     }()
     
-    private let headerStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    private let mainStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 20
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    private let cashStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        return stackView
-    }()
-    
-    private let extraSpaceView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        setupConstraints()
+    init(homeViewModel: HomeViewModelProtocol) {
+        self.homeViewModel = homeViewModel
+        self.greetingLabel = UILabel()
+        self.avatarImageView = UIImageView()
+        self.digioCashLabel = UILabel()
+        self.cashBannerImageView = UIImageView()
+        self.productsLabel = UILabel()
+        self.headerStackView = UIStackView()
+        self.mainStackView = UIStackView()
+        self.cashStackView = UIStackView()
+        self.extraSpaceView = UIView()
+        
+        super.init(frame: .zero)
+        self.setup()
+        
+        spotlightCollectionView.register(SpotlightCell.self, forCellWithReuseIdentifier: SpotlightCell.reuseIdentifier)
+        productsCollectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
+    internal func fetchUpdateUI() {
+        homeViewModel?.fetchDigioStore { [weak self] in
+            DispatchQueue.main.async {
+                self?.updateUI()
+            }
+        }
+    }
+    
+    internal func setupBindings() {
+        avatarImageView.image = homeViewModel?.avatarImage
+        greetingLabel.text = homeViewModel?.greetingText
+        digioCashLabel.attributedText = homeViewModel?.digioCashText
+        productsLabel.text = homeViewModel?.productsLabelText
+    }
+    
+    internal func updateUI() {
+        if let url = homeViewModel?.cashBannerURL() {
+            loadImage(from: url, into: cashBannerImageView)
+        }
+        spotlightCollectionView.reloadData()
+        productsCollectionView.reloadData()
+    }
+    
+    private func loadImage(from url: URL, into imageView: UIImageView) {
+        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else { return }
+            DispatchQueue.main.async {
+                imageView.image = UIImage(data: data)
+            }
+        }
+        task.resume()
+    }
+    
+}
+
+extension HomeView: SetupViewCode {
+    
+    func setupView() {
         headerStackView.addArrangedSubview(avatarImageView)
         headerStackView.addArrangedSubview(greetingLabel)
         
@@ -121,7 +113,47 @@ class HomeView: UIView {
         addSubview(mainStackView)
     }
     
-    private func setupConstraints() {
+    func configure() {
+        greetingLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        greetingLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        avatarImageView.contentMode = .scaleAspectFill
+        avatarImageView.layer.cornerRadius = 30
+        avatarImageView.clipsToBounds = true
+        avatarImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        digioCashLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        cashBannerImageView.contentMode = .scaleAspectFit
+        cashBannerImageView.layer.cornerRadius = 25
+        cashBannerImageView.clipsToBounds = true
+        cashBannerImageView.layer.masksToBounds = true
+        cashBannerImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        productsLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        productsLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerStackView.axis = .horizontal
+        headerStackView.alignment = .center
+        headerStackView.spacing = 8
+        headerStackView.translatesAutoresizingMaskIntoConstraints = false
+        mainStackView.axis = .vertical
+        mainStackView.spacing = 20
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        cashStackView.axis = .vertical
+        cashStackView.spacing = 8
+        cashStackView.translatesAutoresizingMaskIntoConstraints = false
+        
+        extraSpaceView.translatesAutoresizingMaskIntoConstraints = false
+        
+    }
+    
+    func render() {
+        //Adicionar elementos de cores aqui se necessario. 
+    }
+    
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             avatarImageView.widthAnchor.constraint(equalToConstant: 45),
             avatarImageView.heightAnchor.constraint(equalToConstant: 45),
@@ -145,4 +177,3 @@ class HomeView: UIView {
         ])
     }
 }
-
