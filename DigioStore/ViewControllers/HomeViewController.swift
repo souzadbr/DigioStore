@@ -10,7 +10,7 @@ import UIKit
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     var coordinator: Coordinator?
     private var digioStore: DigioStore?
-    
+
     private let avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
@@ -20,11 +20,11 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         imageView.image = UIImage(named: "userAvatar") // Set default image or download user avatar
         return imageView
     }()
-    
+
     private let greetingLabel: UILabel = {
         let label = UILabel()
         label.text = "Olá, Maria"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -38,17 +38,32 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }()
     
     private let digioCashLabel: UILabel = {
-        let label = UILabel()
-        label.text = "digio Cash"
-        label.font = UIFont.boldSystemFont(ofSize: 24)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+            let label = UILabel()
+            let attributedText = NSMutableAttributedString(
+                string: "digio ",
+                attributes: [
+                    .font: UIFont.boldSystemFont(ofSize: 24),
+                    .foregroundColor: UIColor.black
+                ]
+            )
+            attributedText.append(NSAttributedString(
+                string: "Cash",
+                attributes: [
+                    .font: UIFont.boldSystemFont(ofSize: 24),
+                    .foregroundColor: UIColor.darkGray
+                ]
+            ))
+            label.attributedText = attributedText
+            label.translatesAutoresizingMaskIntoConstraints = false
+            return label
+        }()
     
     private let cashBannerImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
+        imageView.layer.cornerRadius = 25
         imageView.clipsToBounds = true
+        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -81,7 +96,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 16
+        stackView.spacing = 20 // Ajustar espaçamento entre os elementos
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -101,7 +116,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         spotlightCollectionView.register(SpotlightCell.self, forCellWithReuseIdentifier: SpotlightCell.reuseIdentifier)
         productsCollectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
     }
-    
+
     private func setupViews() {
         headerStackView.addArrangedSubview(avatarImageView)
         headerStackView.addArrangedSubview(greetingLabel)
@@ -115,27 +130,29 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         view.addSubview(headerStackView)
         view.addSubview(mainStackView)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            avatarImageView.widthAnchor.constraint(equalToConstant: 60),
-            avatarImageView.heightAnchor.constraint(equalToConstant: 60),
+            avatarImageView.widthAnchor.constraint(equalToConstant: 45),
+            avatarImageView.heightAnchor.constraint(equalToConstant: 45),
             
-            headerStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            headerStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50), // Ajustar para colar na parte de cima da tela
             headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            mainStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: 16),
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            mainStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: 40), // Espaço de 20 pontos abaixo do header
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             spotlightCollectionView.heightAnchor.constraint(equalToConstant: 200),
-            cashBannerImageView.heightAnchor.constraint(equalToConstant: 200),
+            cashBannerImageView.heightAnchor.constraint(equalToConstant: 120), // Ajustar altura para o tamanho desejado
+            cashBannerImageView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 5),
+            cashBannerImageView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -5),
             productsCollectionView.heightAnchor.constraint(equalToConstant: 200),
         ])
     }
-    
+
     private func fetchData() {
         let service = DigioStoreService()
         service.fetchDigioStore { [weak self] result in
@@ -150,7 +167,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             }
         }
     }
-    
+
     private func updateUI() {
         guard let digioStore = digioStore else { return }
         if let url = URL(string: digioStore.cash.bannerURL) {
@@ -159,7 +176,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         spotlightCollectionView.reloadData()
         productsCollectionView.reloadData()
     }
-    
+
     private func loadImage(from url: URL, into imageView: UIImageView) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
             guard let data = data, error == nil else { return }
@@ -179,7 +196,7 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == spotlightCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath) as! SpotlightCell
@@ -196,12 +213,17 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         return UICollectionViewCell()
     }
-    
+
     // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if collectionView == spotlightCollectionView {
+            return CGSize(width: view.frame.width - 32, height: 200) // Ocupa toda a largura da tela com margem
+        } else if collectionView == productsCollectionView {
+            return CGSize(width: 100, height: 100) // Ajuste o tamanho conforme necessário
+        }
         return CGSize(width: 200, height: 200)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }

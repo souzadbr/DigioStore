@@ -47,4 +47,3 @@ class ProductCell: UICollectionViewCell {
         task.resume()
     }
 }
-
