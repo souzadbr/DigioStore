@@ -10,16 +10,15 @@ import UIKit
 
 class HomeViewModel {
     private var digioStore: DigioStore?
-    private let service = DigioStoreService()
-    
+
     var avatarImage: UIImage? {
         return UIImage(named: "userAvatar")
     }
-    
+
     var greetingText: String {
         return "Olá, Maria"
     }
-    
+
     var digioCashText: NSAttributedString {
         let attributedText = NSMutableAttributedString(
             string: "digio ",
@@ -37,12 +36,36 @@ class HomeViewModel {
         ))
         return attributedText
     }
-    
+
     var productsLabelText: String {
         return "Produtos"
     }
-    
+
+    var spotlightCount: Int {
+        return digioStore?.spotlight.count ?? 0
+    }
+
+    var productsCount: Int {
+        return digioStore?.products.count ?? 0
+    }
+
+    func spotlightURL(at index: Int) -> URL? {
+        guard let urlString = digioStore?.spotlight[index].bannerURL else { return nil }
+        return URL(string: urlString)
+    }
+
+    func productURL(at index: Int) -> URL? {
+        guard let urlString = digioStore?.products[index].imageURL else { return nil }
+        return URL(string: urlString)
+    }
+
+    func product(at index: Int) -> Products? {
+        guard let products = digioStore?.products else { return nil }
+        return products[index]
+    }
+
     func fetchDigioStore(completion: @escaping () -> Void) {
+        let service = DigioStoreService()
         service.fetchDigioStore { [weak self] result in
             switch result {
             case .success(let digioStore):
@@ -53,28 +76,9 @@ class HomeViewModel {
             }
         }
     }
-    
-    var spotlightCount: Int {
-        return digioStore?.spotlight.count ?? 0
-    }
-    
-    var productsCount: Int {
-        return digioStore?.products.count ?? 0
-    }
-    
-    func spotlightURL(at index: Int) -> URL? {
-        guard let spotlight = digioStore?.spotlight[index] else { return nil }
-        return URL(string: spotlight.bannerURL)
-    }
-    
-    func productURL(at index: Int) -> URL? {
-        guard let product = digioStore?.products[index] else { return nil }
-        return URL(string: product.imageURL)
-    }
-    
+
     func cashBannerURL() -> URL? {
-        guard let digioStore = digioStore else { return nil }
-        return URL(string: digioStore.cash.bannerURL)
+        guard let urlString = digioStore?.cash.bannerURL else { return nil }
+        return URL(string: urlString)
     }
 }
-

@@ -7,6 +7,7 @@
 
 import UIKit
 
+
 class MainCoordinator: Coordinator {
     var navigationController: UINavigationController
 
@@ -20,9 +21,9 @@ class MainCoordinator: Coordinator {
         navigationController.pushViewController(firstViewController, animated: false)
     }
 
-//    func showSecondViewController() {
-//        let secondViewController = SecondViewController()
-//        secondViewController.coordinator = self
-//        navigationController.pushViewController(secondViewController, animated: true)
-//    }
+    func showProductDetail(with product: Products) {
+        let detailVC = ProductDetailViewController()
+        detailVC.product = product
+        navigationController.pushViewController(detailVC, animated: true)
+    }
 }

@@ -7,7 +7,7 @@
 import UIKit
 
 class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    var coordinator: Coordinator?
+    var coordinator: MainCoordinator?
     private let viewModel = HomeViewModel()
     private let homeView = HomeView()
 
@@ -85,6 +85,14 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             return cell
         }
         return UICollectionViewCell()
+    }
+
+    // MARK: - UICollectionViewDelegate
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if collectionView == homeView.productsCollectionView {
+            guard let product = viewModel.product(at: indexPath.item) else { return }
+            coordinator?.showProductDetail(with: product)
+        }
     }
 
     // MARK: - UICollectionViewDelegateFlowLayout
