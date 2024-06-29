@@ -17,7 +17,8 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         imageView.layer.cornerRadius = 30
         imageView.clipsToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "userAvatar") // Set default image or download user avatar
+        imageView.image = UIImage(named: "userAvatar")
+        
         return imageView
     }()
 
@@ -96,9 +97,23 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     private let mainStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 20 // Ajustar espaçamento entre os elementos
+        stackView.spacing = 20
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
+    }()
+    
+    private let cashStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 8 // Ajustar espaçamento entre o label e a imagem
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
+    
+    private let extraSpaceView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
     }()
     
     override func viewDidLoad() {
@@ -121,9 +136,12 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         headerStackView.addArrangedSubview(avatarImageView)
         headerStackView.addArrangedSubview(greetingLabel)
         
+        cashStackView.addArrangedSubview(extraSpaceView)
+        cashStackView.addArrangedSubview(digioCashLabel)
+        cashStackView.addArrangedSubview(cashBannerImageView)
+        
         mainStackView.addArrangedSubview(spotlightCollectionView)
-        mainStackView.addArrangedSubview(digioCashLabel)
-        mainStackView.addArrangedSubview(cashBannerImageView)
+        mainStackView.addArrangedSubview(cashStackView)
         mainStackView.addArrangedSubview(productsLabel)
         mainStackView.addArrangedSubview(productsCollectionView)
         
@@ -136,20 +154,22 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
             avatarImageView.widthAnchor.constraint(equalToConstant: 45),
             avatarImageView.heightAnchor.constraint(equalToConstant: 45),
             
-            headerStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50), // Ajustar para colar na parte de cima da tela
+            headerStackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
             headerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             headerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            mainStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: 40), // Espaço de 20 pontos abaixo do header
-            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            mainStackView.topAnchor.constraint(equalTo: headerStackView.bottomAnchor, constant: 40),
+            mainStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 5),
+            mainStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -5),
             mainStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
             spotlightCollectionView.heightAnchor.constraint(equalToConstant: 200),
-            cashBannerImageView.heightAnchor.constraint(equalToConstant: 120), // Ajustar altura para o tamanho desejado
+            cashBannerImageView.heightAnchor.constraint(equalToConstant: 120),
             cashBannerImageView.leadingAnchor.constraint(equalTo: mainStackView.leadingAnchor, constant: 5),
             cashBannerImageView.trailingAnchor.constraint(equalTo: mainStackView.trailingAnchor, constant: -5),
             productsCollectionView.heightAnchor.constraint(equalToConstant: 200),
+            
+            extraSpaceView.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
 
