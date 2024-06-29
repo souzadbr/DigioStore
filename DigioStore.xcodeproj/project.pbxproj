@@ -20,7 +20,6 @@
 		6AFBDDA32C2F3372001339AB /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDDA22C2F3372001339AB /* Coordinator.swift */; };
 		6AFBDDAB2C2F3542001339AB /* DigioStoreModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDDAA2C2F3542001339AB /* DigioStoreModel.swift */; };
 		6AFBDDB42C2F365C001339AB /* DigioStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDDB32C2F365C001339AB /* DigioStoreService.swift */; };
-		6AFBDDB72C2F37A0001339AB /* Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDDB62C2F37A0001339AB /* Loading.swift */; };
 		6AFBDDB92C2F37AB001339AB /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDDB82C2F37AB001339AB /* Error.swift */; };
 		6AFBDDBC2C2F7EC7001339AB /* SpotlightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDDBB2C2F7EC7001339AB /* SpotlightCell.swift */; };
 		6AFBDDBE2C2F7EFB001339AB /* ProductCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDDBD2C2F7EFB001339AB /* ProductCell.swift */; };
@@ -61,7 +60,6 @@
 		6AFBDDA22C2F3372001339AB /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		6AFBDDAA2C2F3542001339AB /* DigioStoreModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigioStoreModel.swift; sourceTree = "<group>"; };
 		6AFBDDB32C2F365C001339AB /* DigioStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigioStoreService.swift; sourceTree = "<group>"; };
-		6AFBDDB62C2F37A0001339AB /* Loading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loading.swift; sourceTree = "<group>"; };
 		6AFBDDB82C2F37AB001339AB /* Error.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		6AFBDDBB2C2F7EC7001339AB /* SpotlightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightCell.swift; sourceTree = "<group>"; };
 		6AFBDDBD2C2F7EFB001339AB /* ProductCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCell.swift; sourceTree = "<group>"; };
@@ -115,6 +113,7 @@
 		6AFBDD692C2F2A6F001339AB /* DigioStore */ = {
 			isa = PBXGroup;
 			children = (
+				6AFBDDC12C302B17001339AB /* DigioCell */,
 				6AFBDDB52C2F378A001339AB /* Communs */,
 				6AFBDDB22C2F3617001339AB /* Managers */,
 				6AFBDDA52C2F3455001339AB /* Models */,
@@ -159,7 +158,6 @@
 		6AFBDDA42C2F3441001339AB /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				6AFBDDBA2C2F7EB4001339AB /* DigioCells */,
 				6AFBDD6E2C2F2A6F001339AB /* HomeViewController.swift */,
 			);
 			path = ViewControllers;
@@ -184,19 +182,18 @@
 		6AFBDDB52C2F378A001339AB /* Communs */ = {
 			isa = PBXGroup;
 			children = (
-				6AFBDDB62C2F37A0001339AB /* Loading.swift */,
 				6AFBDDB82C2F37AB001339AB /* Error.swift */,
 			);
 			path = Communs;
 			sourceTree = "<group>";
 		};
-		6AFBDDBA2C2F7EB4001339AB /* DigioCells */ = {
+		6AFBDDC12C302B17001339AB /* DigioCell */ = {
 			isa = PBXGroup;
 			children = (
 				6AFBDDBB2C2F7EC7001339AB /* SpotlightCell.swift */,
 				6AFBDDBD2C2F7EFB001339AB /* ProductCell.swift */,
 			);
-			path = DigioCells;
+			path = DigioCell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -362,7 +359,6 @@
 				6AFBDDA12C2F3317001339AB /* MainCoordinator.swift in Sources */,
 				6AFBDDB42C2F365C001339AB /* DigioStoreService.swift in Sources */,
 				6AFBDDBE2C2F7EFB001339AB /* ProductCell.swift in Sources */,
-				6AFBDDB72C2F37A0001339AB /* Loading.swift in Sources */,
 				6AFBDD6D2C2F2A6F001339AB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
