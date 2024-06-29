@@ -8,7 +8,6 @@
 import Foundation
 
 class DigioStoreService {
-    
   
     func fetchDigioStore(completion: @escaping (Result<DigioStore, Error>) -> Void) {
         let urlString = "https://7hgi9vtkdc.execute-api.sa-east-1.amazonaws.com/sandbox/products"
