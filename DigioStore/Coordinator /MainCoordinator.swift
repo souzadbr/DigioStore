@@ -10,19 +10,12 @@ import UIKit
 class MainCoordinator: Coordinator {
     var navigationController: UINavigationController
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController = UINavigationController()) {
         self.navigationController = navigationController
     }
 
     func start() {
-        let firstViewController = HomeViewController()
-        firstViewController.coordinator = self
-        navigationController.pushViewController(firstViewController, animated: false)
+        let homeViewController = HomeViewController()
+        navigationController.viewControllers = [homeViewController]
     }
-
-//    func showSecondViewController() {
-//        let secondViewController = SecondViewController()
-//        secondViewController.coordinator = self
-//        navigationController.pushViewController(secondViewController, animated: true)
-//    }
 }

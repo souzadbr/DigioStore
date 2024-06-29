@@ -15,10 +15,45 @@ O objetivo deste projeto é demonstrar como organizar e separar responsabilidade
 - **ViewModel**: Contém a lógica de apresentação e se comunica com o Model para buscar e formatar os dados que serão exibidos pela View.
 - **Coordinator**: Gerencia a navegação entre as telas.
 
-## Estrutura do Projeto
- 
- adicionar imagem da estratura final. 
- 
+### Interação
+
+- **HomeViewController**: Configura e atualiza a interface do usuário com os dados fornecidos pelo `HomeViewModel`.
+- **HomeViewModel**: Busca os dados do `DigioStoreService` e formata-os para exibição.
+- **AppCoordinator e MainCoordinator**: Gerenciam a navegação e a coordenação entre as diferentes telas do aplicativo.
+- **HomeView**: Configura a interface do usuário e gerencia o layout dos componentes.
+- **ErrorViewController**: Exibe mensagens de erro quando o serviço está indisponível ou não há conexão com a internet.
+
+### Tratamento de Erros
+
+O aplicativo inclui uma tela de erro (`ErrorViewController`) para lidar com dois tipos de erro:
+
+1. **Sem conexão com a internet**:
+    - Exibe uma mensagem indicando a falta de conexão com a internet.
+    - Inclui um botão "Tentar novamente" para reavaliar a conectividade e tentar carregar os dados novamente.
+    - Inclui um botão "X" no canto superior esquerdo que fecha totalmente a aplicação.
+
+2. **Erro desconhecido**:
+    - Exibe uma mensagem genérica indicando que algo deu errado.
+    - Inclui um botão "Tentar novamente" para tentar carregar os dados novamente.
+
+## Observação sobre telas de erro:
+
+As telas de erro têm um botão de "Tentar novamente", já que não consegui testar uma reconexão com a internet (o simulador não reconhecia essa reconexão). Adicionei um botão "X" que fecha totalmente a aplicação para o usuário não ficar preso naquela tela. Considero isso um bug na minha aplicação ja que nao tenho celular fisico para fazer um teste melhor e confirmar esse problema e nao estou achando a origem do problema no codigo. 
+
+### NetworkMonitor
+
+O `NetworkMonitor` utiliza o framework `Network` para monitorar a conectividade da rede. Ele notifica o `HomeViewController` sobre mudanças no status da rede para que a UI possa ser atualizada adequadamente.
+
+### Estrutura do Projeto
+
+- `DigioStore/`: Pasta raiz do projeto.
+- `ViewModel/`: Contém o arquivo `HomeViewModel`.
+- `DigioCell/`: Contém os arquivos `SpotlightCell` e `ProductCell`.
+- `Managers/`: Contém o arquivo `DigioStoreService`.
+- `Models/`: Contém o arquivo `DigioStoreModel`.
+- `ViewControllers/`: Contém o arquivo `HomeViewController` e  `ErrorViewController`.
+- `Coordinator/`: Contém os arquivos `AppCoordinator`, `MainCoordinator`, `Coordinator`.
+- `Views/`: Contém o arquivo `HomeView`.
  
  
 ### Model
@@ -71,6 +106,15 @@ Este projeto foi atualizado para usar Swift 4.2.
 3. Execute o projeto:
     - Selecione o dispositivo ou simulador desejado.
     - Clique no botão "Run" ou pressione `Cmd + R`.
+    
+Este projeto utiliza o [SwiftLint](https://github.com/realm/SwiftLint) para garantir que o código siga as melhores práticas e padrões de estilo do Swift.
+
+#### Instalação do SwiftLint
+
+Se você ainda não tem o SwiftLint instalado, pode instalá-lo usando [Homebrew](https://brew.sh/):
+
+```bash
+brew install swiftlint
 
 ## Uso
 

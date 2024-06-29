@@ -6,7 +6,7 @@
 //
 import UIKit
 
-class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class HomeViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, ErrorViewControllerDelegate {
     var coordinator: Coordinator?
     private let viewModel = HomeViewModel()
     private let homeView = HomeView()
@@ -28,11 +28,15 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         homeView.spotlightCollectionView.register(SpotlightCell.self, forCellWithReuseIdentifier: SpotlightCell.reuseIdentifier)
         homeView.productsCollectionView.register(ProductCell.self, forCellWithReuseIdentifier: ProductCell.reuseIdentifier)
         
-        viewModel.fetchDigioStore { [weak self] in
-            DispatchQueue.main.async {
-                self?.updateUI()
-            }
-        }
+        NetworkMonitor.shared.startMonitoring()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(networkStatusChanged), name: .networkStatusChanged, object: nil)
+        
+        checkNetworkAndFetchData()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: .networkStatusChanged, object: nil)
     }
 
     private func setupBindings() {
@@ -42,7 +46,32 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
         homeView.productsLabel.text = viewModel.productsLabelText
     }
 
+    private func checkNetworkAndFetchData() {
+        if NetworkMonitor.shared.isConnected {
+            viewModel.fetchDigioStore { [weak self] in
+                DispatchQueue.main.async {
+                    self?.updateUI()
+                }
+            }
+        } else {
+            showErrorScreen(errorType: .noInternet)
+        }
+    }
+
+    @objc private func networkStatusChanged() {
+        if NetworkMonitor.shared.isConnected {
+            dismissErrorScreenIfNeeded()
+            checkNetworkAndFetchData()
+        }
+    }
+
     private func updateUI() {
+        print("Updating UI")
+        guard NetworkMonitor.shared.isConnected else {
+            showErrorScreen(errorType: .noInternet)
+            return
+        }
+
         if let url = viewModel.cashBannerURL() {
             loadImage(from: url, into: homeView.cashBannerImageView)
         }
@@ -51,13 +80,43 @@ class HomeViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
 
     private func loadImage(from url: URL, into imageView: UIImageView) {
+        print("Loading image from URL: \(url)")
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    self.showErrorScreen(errorType: .unknown)
+                }
+                return
+            }
             DispatchQueue.main.async {
                 imageView.image = UIImage(data: data)
             }
         }
         task.resume()
+    }
+    
+    private func showErrorScreen(errorType: ErrorViewController.ErrorType) {
+        let errorVC = ErrorViewController(errorType: errorType)
+        errorVC.delegate = self
+        errorVC.modalPresentationStyle = .fullScreen
+        present(errorVC, animated: true, completion: nil)
+    }
+    
+    private func dismissErrorScreenIfNeeded() {
+        if let presentedVC = presentedViewController as? ErrorViewController {
+            presentedVC.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    // MARK: - ErrorViewControllerDelegate
+    func didTapRetry(errorViewController: ErrorViewController) {
+        if NetworkMonitor.shared.isConnected {
+            errorViewController.dismiss(animated: true) {
+                self.checkNetworkAndFetchData()
+            }
+        } else {
+            errorViewController.configureErrorView()
+        }
     }
 
     // MARK: - UICollectionViewDataSource
