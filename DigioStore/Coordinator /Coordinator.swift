@@ -11,3 +11,11 @@ protocol Coordinator {
     var navigationController: UINavigationController { get set }
     func start()
 }
+
+extension Coordinator {
+    func showProductDetail(with product: Products) {
+        let detailVC = ProductDetailViewController()
+        detailVC.product = product
+        navigationController.pushViewController(detailVC, animated: true)
+    }
+}
