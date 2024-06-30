@@ -4,6 +4,7 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
+
 import Foundation
 
 struct DigioStore: Decodable {
