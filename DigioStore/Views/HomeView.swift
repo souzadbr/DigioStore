@@ -79,15 +79,24 @@ class HomeView: UIView {
     
     internal func updateUI() {
         if let url = homeViewModel?.cashBannerURL() {
-            loadImage(from: url, into: cashBannerImageView)
+            loadImage(from: url, into: cashBannerImageView, onFailure: {
+                // definir um placeholder ou mensagem de erro
+                self.cashBannerImageView.image = UIImage(named: "Sem carregamento de imagem")
+            })
         }
         spotlightCollectionView.reloadData()
         productsCollectionView.reloadData()
     }
     
-    private func loadImage(from url: URL, into imageView: UIImageView) {
+    
+    private func loadImage(from url: URL, into imageView: UIImageView, onFailure: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    onFailure()
+                }
+                return
+            }
             DispatchQueue.main.async {
                 imageView.image = UIImage(data: data)
             }
@@ -159,7 +168,8 @@ extension HomeView: SetupViewCode {
     }
     
     func render() {
-        backgroundColor = .white // Definindo cor de fundo branca para a view principal
+        spotlightCollectionView.backgroundColor = .clear
+        productsCollectionView.backgroundColor = .clear
     }
     
     func setupConstraints() {
