@@ -25,6 +25,7 @@ class HomeView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white // Definindo cor de fundo branca
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -33,6 +34,7 @@ class HomeView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -115,13 +117,16 @@ extension HomeView: SetupViewCode {
     
     func configure() {
         greetingLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        greetingLabel.backgroundColor = .clear
         greetingLabel.translatesAutoresizingMaskIntoConstraints = false
         
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.cornerRadius = 30
         avatarImageView.clipsToBounds = true
+        avatarImageView.backgroundColor = .clear
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         
+        digioCashLabel.backgroundColor = .clear
         digioCashLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cashBannerImageView.contentMode = .scaleAspectFit
@@ -136,21 +141,25 @@ extension HomeView: SetupViewCode {
         headerStackView.axis = .horizontal
         headerStackView.alignment = .center
         headerStackView.spacing = 8
+        headerStackView.backgroundColor = .clear
         headerStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.axis = .vertical
         mainStackView.spacing = 20
+        mainStackView.backgroundColor = .clear
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         cashStackView.axis = .vertical
         cashStackView.spacing = 8
+        cashStackView.backgroundColor = .clear
         cashStackView.translatesAutoresizingMaskIntoConstraints = false
         
+        extraSpaceView.backgroundColor = .clear
         extraSpaceView.translatesAutoresizingMaskIntoConstraints = false
         
     }
     
     func render() {
-        //Adicionar elementos de cores aqui se necessario. 
+        backgroundColor = .white // Definindo cor de fundo branca para a view principal
     }
     
     func setupConstraints() {
