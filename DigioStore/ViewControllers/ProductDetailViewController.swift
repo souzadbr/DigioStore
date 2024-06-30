@@ -14,7 +14,7 @@ class ProductDetailViewController: UIViewController {
             configureView()
         }
     }
-    private let productDetailView: ProductDetailView
+    internal let productDetailView: ProductDetailView
     
     init(viewModel: ProductDetailViewModelProtocol) {
         self.viewModel = viewModel
@@ -44,7 +44,7 @@ class ProductDetailViewController: UIViewController {
         productDetailView.configure(with: viewModel)
     }
     
-    @objc private func enableProductSwitchChanged(_ sender: UISwitch) {
+    @objc internal func enableProductSwitchChanged(_ sender: UISwitch) {
         guard let viewModel = viewModel else { return }
         if sender.isOn {
             viewModel.showBottomSheet(on: self)

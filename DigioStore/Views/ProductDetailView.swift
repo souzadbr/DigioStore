@@ -35,7 +35,7 @@ class ProductDetailView: UIView {
     func configure(with viewModel: ProductDetailViewModelProtocol) {
         productNameLabel.text = viewModel.productName
         productDescriptionLabel.text = viewModel.productDescription
-        viewModel.loadImage { [weak self] image in
+        viewModel.loadImage(using: URLSession.shared) { [weak self] image in
             self?.productImageView.image = image
         }
     }
@@ -56,7 +56,6 @@ extension ProductDetailView: SetupViewCode {
         productImageView.contentMode = .scaleAspectFit
         productImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        productNameLabel.textColor = .black
         productNameLabel.font = UIFont.boldSystemFont(ofSize: 24)
         productNameLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -72,7 +71,7 @@ extension ProductDetailView: SetupViewCode {
     }
     
     func render() {
-        //Adicionar elementos de cores aqui se necessario.
+        productNameLabel.textColor = .black
     }
     
     func setupConstraints() {

@@ -12,13 +12,12 @@ protocol ProductDetailViewModelProtocol: AnyObject {
     var productName: String { get }
     var productDescription: String { get }
     
-    func loadImage(completion: @escaping (UIImage?) -> Void)
+    func loadImage(using session: URLSession, completion: @escaping (UIImage?) -> Void)
     func showBottomSheet(on viewController: UIViewController)
     func showDisableAlert(on viewController: UIViewController)
-    
 }
 
-class ProductDetailViewModel: ProductDetailViewModelProtocol{
+class ProductDetailViewModel: ProductDetailViewModelProtocol {
     
     private let product: Products
     
@@ -34,13 +33,13 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol{
         return product.description
     }
     
-    func loadImage(completion: @escaping (UIImage?) -> Void) {
+    func loadImage(using session: URLSession = URLSession.shared, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: product.imageURL) else {
             completion(nil)
             return
         }
         
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        let task = session.dataTask(with: url) { data, response, error in
             if let error = error {
                 print("Error loading image: \(error)")
                 completion(nil)
@@ -60,17 +59,17 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol{
     }
     
     func showBottomSheet(on viewController: UIViewController) {
-        let bottonSheeetVC = BottomSheetViewController()
+        let bottomSheetVC = BottomSheetViewController()
         if #available(iOS 15.0, *) {
-            bottonSheeetVC.modalPresentationStyle = .pageSheet
-            if let bottonSheet = bottonSheeetVC.sheetPresentationController {
-                bottonSheet.detents = [.medium()]
+            bottomSheetVC.modalPresentationStyle = .pageSheet
+            if let bottomSheet = bottomSheetVC.sheetPresentationController {
+                bottomSheet.detents = [.medium()]
             }
         } else {
-            bottonSheeetVC.modalPresentationStyle = .overFullScreen
+            bottomSheetVC.modalPresentationStyle = .overFullScreen
         }
         
-        viewController.present(bottonSheeetVC, animated: true, completion: nil)
+        viewController.present(bottomSheetVC, animated: true, completion: nil)
     }
     
     func showDisableAlert(on viewController: UIViewController) {
