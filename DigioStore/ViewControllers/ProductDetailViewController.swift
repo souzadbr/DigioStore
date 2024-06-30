@@ -7,68 +7,52 @@
 import UIKit
 
 class ProductDetailViewController: UIViewController {
-    var viewModel: ProductDetailViewModel? {
+    
+    var viewModel: ProductDetailViewModelProtocol? {
         didSet {
             configureView()
         }
     }
-
-    private let productDetailView = ProductDetailView()
-
+    private let productDetailView: ProductDetailView
+    
+    init(viewModel: ProductDetailViewModelProtocol) {
+        self.viewModel = viewModel
+        self.productDetailView = ProductDetailView(productDetailViewModel: viewModel)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func loadView() {
         view = productDetailView
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationItem.title = "Produto"
         productDetailView.enableProductSwitch.addTarget(self, action: #selector(enableProductSwitchChanged), for: .valueChanged)
+        configureView()
     }
-
+    
     private func configureView() {
         guard let viewModel = viewModel else { return }
         productDetailView.productNameLabel.text = viewModel.productName
-        productDetailView.productDescriptionLabel.text = viewModel.productDescription
-        viewModel.loadImage { [weak self] image in
-            self?.productDetailView.productImageView.image = image
-        }
+        productDetailView.configure(with: viewModel)
     }
-
+    
     @objc private func enableProductSwitchChanged(_ sender: UISwitch) {
+        guard let viewModel = viewModel else { return }
         if sender.isOn {
-            showBottomSheet()
+            viewModel.showBottomSheet(on: self)
         } else {
-            showDisableAlert()
+            viewModel.showDisableAlert(on: self)
         }
-    }
-
-    private func showBottomSheet() {
-        let bottomSheetVC = BottomSheetViewController()
-        if #available(iOS 15.0, *) {
-            bottomSheetVC.modalPresentationStyle = .pageSheet
-            if let sheet = bottomSheetVC.sheetPresentationController {
-                sheet.detents = [.medium()]
-            }
-        } else {
-            bottomSheetVC.modalPresentationStyle = .overFullScreen
-        }
-        present(bottomSheetVC, animated: true, completion: nil)
-    }
-
-    private func showDisableAlert() {
-        let alert = UIAlertController(title: nil, message: "Este produto está sendo desabilitado e não contará na próxima fatura do seu cartão Digio.", preferredStyle: .alert)
-        
-        if #available(iOS 13.0, *) {
-            let imageView = UIImageView(frame: CGRect(x: 220, y: 10, width: 40, height: 40))
-            imageView.image = UIImage(systemName: "exclamationmark.triangle.fill")
-            imageView.tintColor = .red
-            alert.view.addSubview(imageView)
-        }
-        
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-        alert.addAction(okAction)
-        
-        present(alert, animated: true, completion: nil)
     }
 }
+
+
+
+

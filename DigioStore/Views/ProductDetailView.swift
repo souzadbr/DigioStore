@@ -4,58 +4,46 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
+
 import UIKit
 
 class ProductDetailView: UIView {
-
-    let productImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    let productNameLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 24)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    let productDescriptionLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
-    let enableProductSwitch: UISwitch = {
-        let switchControl = UISwitch()
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
-        return switchControl
-    }()
+    private weak var productDetailViewModel: ProductDetailViewModelProtocol?
     
-    let enableProductLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Habilitar Produto"
-        label.textColor = .black
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupViews()
-        setupConstraints()
+    internal let productImageView: UIImageView
+    internal let productNameLabel: UILabel
+    internal let productDescriptionLabel: UILabel
+    internal let enableProductSwitch: UISwitch
+    private var enableProductLabel: UILabel
+    
+    init(productDetailViewModel: ProductDetailViewModelProtocol) {
+        self.productDetailViewModel = productDetailViewModel
+        self.productImageView = UIImageView()
+        self.productNameLabel = UILabel()
+        self.productDescriptionLabel = UILabel()
+        self.enableProductSwitch = UISwitch()
+        self.enableProductLabel = UILabel()
+        super.init(frame: .zero)
+        setup()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupViews() {
+    func configure(with viewModel: ProductDetailViewModelProtocol) {
+        productNameLabel.text = viewModel.productName
+        productDescriptionLabel.text = viewModel.productDescription
+        viewModel.loadImage { [weak self] image in
+            self?.productImageView.image = image
+        }
+    }
+}
+
+extension ProductDetailView: SetupViewCode {
+    
+    func setupView() {
         addSubview(productImageView)
         addSubview(productNameLabel)
         addSubview(productDescriptionLabel)
@@ -63,7 +51,31 @@ class ProductDetailView: UIView {
         addSubview(enableProductLabel)
     }
     
-    private func setupConstraints() {
+    func configure() {
+        
+        productImageView.contentMode = .scaleAspectFit
+        productImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        productNameLabel.textColor = .black
+        productNameLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        productNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        productDescriptionLabel.numberOfLines = 0
+        productDescriptionLabel.textColor = .black
+        productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        enableProductSwitch.translatesAutoresizingMaskIntoConstraints = false
+        
+        enableProductLabel.text = "Habilitar Produto"
+        enableProductLabel.textColor = .black
+        enableProductLabel.translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    func render() {
+        //Adicionar elementos de cores aqui se necessario.
+    }
+    
+    func setupConstraints() {
         NSLayoutConstraint.activate([
             productImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             productImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
