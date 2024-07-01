@@ -56,7 +56,7 @@ Este projeto foi atualizado para usar Swift 4.2.
 
 - Xcode 15.4+
 - Swift 4.2+
-- DeployTarget iOS 12
+- Deployment Target iOS 12
 
 ### Swiftlint
 
@@ -123,7 +123,7 @@ A tela inicial (`HomeViewController`) exibe uma saudação personalizada, uma co
 
 ### Problema de Acesso às Imagens
 
-Durante o desenvolvimento, encontramos um problema onde uma das URLs das imagens dos produtos retornava um erro de "Access Denied". 
+Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens dos produtos retornava um erro de "Access Denied". 
 
 #### Erro de Exemplo que aparece no meu navegador, apesar disso a celula que retornaria essa imagem ao clicar leva para uma pagina de detalhes:
 
@@ -137,11 +137,13 @@ Durante o desenvolvimento, encontramos um problema onde uma das URLs das imagens
 
 ### Tratamento de Erro das Imagens
 
-O tratamento de erro da imagem foi implementado para todas as imagens, pois a terceira imagem da lista de produtos estava ficando em branco como se nada tivesse ali. Agora, o usuário tem um feedback que ali deveria ter uma imagem.
+O tratamento de erro da imagem foi implementado para todas as imagens, pois a terceira imagem da lista de produtos estava ficando em branco como 
+se nada tivesse ali. Agora, o usuário tem um feedback que ali deveria ter uma imagem.
 
 ### Motivo da Escolha da Arquitetura MVVM-C
 
-Foi a arquitetura que mais tive contato nos dois projetos que trabalhei tanto no Itaú, quanto na Porto Seguro. Tive contato com VIPER, mas muito pouco, então decidi fazer usando algo que vi mais presente nos projetos que vivenciei.
+Foi a arquitetura que mais tive contato nos dois projetos que trabalhei tanto no Itaú, quanto na Porto Seguro. Tive contato com VIPER, mas muito 
+pouco, então decidi fazer usando algo que vi mais presente nos projetos que vivenciei.
 
 ### Testes Unitários
 
@@ -149,22 +151,29 @@ Foram realizados alguns testes unitários que julguei importantes, mas acredito 
 
 ### Estrutura da Home
 
-A estrutura da Home foi feita usando StackView e nisso foi empilhada uma CollectionView para poder ter um scroll horizontal, algumas views e abaixo outra CollectionView para também ter um scroll horizontal para visualizar todas as imagens de produtos da lista. Foi escolhida pelo fato de ter o scroll horizontal e também caso venha a ter mais produtos é de fácil inclusão.
+A estrutura da Home foi feita usando StackView e nisso foi empilhada uma CollectionView para poder ter um scroll horizontal, algumas views e 
+abaixo outra CollectionView para também ter um scroll horizontal para visualizar todas as imagens de produtos da lista. Foi escolhida pelo fato 
+de ter o scroll horizontal e também caso venha a ter mais produtos é de fácil inclusão.
 
 ### Ponto de Atenção
 
-A Home poderia ter sido construída usando TableView para, caso tivesse adição de itens futuramente, ser uma manutenção menos custosa. Pensei nisso posteriormente. Fica a observação que seria realmente uma melhor escolha do que construir com StackView, mas sendo uma jornada que nao teria mudanca a ongo prazo nao vejo problema, mas sendo uma Home de fato onde o cliente tem acesso a maior parte das jornadas a TableView seria a melhor escolha e melhor manutencao a curto prazo.
+A Home poderia ter sido construída usando TableView para, caso tivesse adição de itens futuramente, ser uma manutenção menos custosa. 
+Pensei nisso posteriormente. Fica a observação que seria realmente uma melhor escolha do que construir com StackView, mas sendo uma 
+jornada que não teria mudança a longo prazo, não vejo problema. Porém, sendo uma Home de fato onde o cliente tem acesso a maior parte 
+das jornadas, a TableView seria a melhor escolha e melhor manutenção a curto prazo.
 
-### Uso de protocolos nas ViewModels
+### Uso de Protocolos nas ViewModels
 
-Optei pelo uso dos protocolos por ser uma pratica que aprendi em um dos projetos que trabalhei. 
-Essa pratica tras algumas vantagens ajudando na questao de testes e manutencao.
+Optei pelo uso dos protocolos por ser uma prática que aprendi em um dos projetos que trabalhei. Essa prática traz algumas vantagens ajudando 
+na questão de testes e manutenção:
 
-1. Ajuda no desacoplamento, pois a View vai ter uma referencia do protocolo e nao diretamente da ViewModel e com isso ela nao conhece a implementacao, mas sabe que o protocolo e cumprimdo pela View Modell. 
-2. Ajuda nos testes unitarios. 
-3. Facilita manuntencao reduzindo impacto das mudanças. 
-4. Reutilizacao: protocolo permite que seja reutilizado em diferentes contextos. Por exemplo, se você tiver diferentes tipos de view models que compartilham uma interface comum, eles podem todos implementar o mesmo protocolo.
-5. Clareza do codigo definindo quais sao os requisitos de uma classe ou struct. 
+1. **Desacoplamento**: A View vai ter uma referência do protocolo e não diretamente da ViewModel e com isso ela não conhece a implementação,
+ mas sabe que o protocolo é cumprido pela ViewModel.
+2. **Testes Unitários**: Facilita a criação de mocks e stubs para testes.
+3. **Facilidade de Manutenção**: Reduz o impacto das mudanças na implementação da ViewModel.
+4. **Reutilização**: Permite que o protocolo seja reutilizado em diferentes contextos. Por exemplo, se você tiver diferentes tipos de ViewModels
+ que compartilham uma interface comum, eles podem todos implementar o mesmo protocolo.
+5. **Clareza do Código**: Define claramente quais são os requisitos de uma classe ou struct.
 
 ## Contribuição
 
@@ -173,6 +182,9 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
 ### Para Contribuir
 
 1. Faça um fork do projeto.
+    ```bash
+    git clone https://github.com/seu-usuario/digio-store.git
+    ```
 2. Crie uma branch para sua feature/fix:
     ```bash
     git checkout -b minha-feature
@@ -187,3 +199,10 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
     ```
 5. Abra um Pull Request.
 
+### SwiftLint
+
+Fiz todas as configurações para o uso do SwiftLint para seguir algumas regras e com isso garantir boas práticas e padronização do código em alguns aspectos. Tentei diversas vezes integrar ele no meu Xcode no projeto, porém tive problemas de permissão no acesso ao arquivo pelo Xcode. Tentei resolver essas permissões de algumas formas que encontrei em pesquisas e não deu certo. 
+
+Já que estava atrapalhando o build do meu projeto, desfiz as configurações para vincular ele na minha IDE e mostrar as violações ali durante o Build. Infelizmente, nesse momento, meu projeto só tem acesso às violações rodando o SwiftLint no terminal.
+
+Fazendo isso, ele mostra a lista de violações e seus arquivos.
