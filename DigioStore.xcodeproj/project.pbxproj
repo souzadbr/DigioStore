@@ -273,8 +273,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6AFBDD912C2F2A71001339AB /* Build configuration list for PBXNativeTarget "DigioStore" */;
 			buildPhases = (
+				6AFBDD9A2C2F2CBC001339AB /* Run Script */,
 				6AFBDD632C2F2A6F001339AB /* Sources */,
-				6AFBDD9A2C2F2CBC001339AB /* ShellScript */,
 				6AFBDD642C2F2A6F001339AB /* Frameworks */,
 				6AFBDD652C2F2A6F001339AB /* Resources */,
 			);
@@ -393,7 +393,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6AFBDD9A2C2F2CBC001339AB /* ShellScript */ = {
+		6AFBDD9A2C2F2CBC001339AB /* Run Script */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -403,6 +403,7 @@
 			);
 			inputPaths = (
 			);
+			name = "Run Script";
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -410,7 +411,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "if which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
