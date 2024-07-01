@@ -37,5 +37,5 @@ class MockURLProtocol: URLProtocol {
     override func stopLoading() {
         // sem implementacao. 
     }
+    
 }
-

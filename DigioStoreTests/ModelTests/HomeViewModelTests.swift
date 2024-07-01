@@ -11,7 +11,7 @@ import XCTest
 final class HomeViewModelTests: XCTestCase {
     
     var mockService: MockDigioStoreService!
-    var viewModel: HomeViewModel!
+    var viewModel: HomeViewModelProtocol!
     
     override func setUpWithError() throws {
         // Inicialize o serviço mock e a view model antes de cada teste
@@ -22,18 +22,15 @@ final class HomeViewModelTests: XCTestCase {
     override func tearDownWithError() throws {
         // Libere quaisquer recursos ou limpe qualquer estado global após cada teste
         mockService = nil
-        viewModel = nil    }
+        viewModel = nil
+    }
     
     func testInitialization() throws {
-        let viewModel = HomeViewModel()
         XCTAssertEqual(viewModel.greetingText, "Olá, Maria")
         XCTAssertEqual(viewModel.productsLabelText, "Produtos")
     }
     
     func testFetchDigioStore() throws {
-        let mockService = MockDigioStoreService()
-        let viewModel = HomeViewModel(service: mockService)
-        
         let expectation = self.expectation(description: "Fetch Digio Store")
         viewModel.fetchDigioStore {
             expectation.fulfill()
@@ -44,5 +41,32 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.spotlightCount, mockService.mockData.spotlight.count)
         XCTAssertEqual(viewModel.productsCount, mockService.mockData.products.count)
     }
+    
+    func testSpotlightURL() throws {
+        viewModel.fetchDigioStore {
+            XCTAssertEqual(self.viewModel.spotlightURL(at: 0)?.absoluteString, "https://example.com/banner1")
+            XCTAssertEqual(self.viewModel.spotlightURL(at: 1)?.absoluteString, "https://example.com/banner2")
+        }
+    }
+    
+    func testProductURL() throws {
+        viewModel.fetchDigioStore {
+            XCTAssertEqual(self.viewModel.productURL(at: 0)?.absoluteString, "https://example.com/image1")
+            XCTAssertEqual(self.viewModel.productURL(at: 1)?.absoluteString, "https://example.com/image2")
+        }
+    }
+    
+    func testProductAtIndex() throws {
+        viewModel.fetchDigioStore {
+            XCTAssertEqual(self.viewModel.product(at: 0)?.name, "Product 1")
+            XCTAssertEqual(self.viewModel.product(at: 1)?.name, "Product 2")
+        }
+    }
+    
+    func testCashBannerURL() throws {
+        viewModel.fetchDigioStore {
+            XCTAssertEqual(self.viewModel.cashBannerURL()?.absoluteString, "https://example.com/cash")
+        }
+    }
+    
 }
-
