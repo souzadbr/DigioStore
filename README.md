@@ -75,14 +75,14 @@ Para integrar o SwiftLint com o Xcode e ver as violações diretamente na IDE:
 5. Clique no botão "+" e adicione uma nova "Run Script Phase".
 6. Arraste a nova fase acima de "Compile Sources".
 7. No campo de script, adicione a seguinte linha (abaixo tem um exemplo):
-"
+
     if which swiftlint > /dev/null; 
        then
      swiftlint
    else
     echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
    fi
-"
+
 8. Feche as configurações do projeto.
 9. Compile o projeto no Xcode('Cmd + B')
 **aqui tive falhas de build**
