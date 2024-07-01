@@ -29,7 +29,7 @@ class MainCoordinator: Coordinator {
     func showProductDetail(with product: Products) {
         let viewModel = ProductDetailViewModel(product: product)
         let detailVC = ProductDetailViewController(viewModel: viewModel)
-        detailVC.viewModel = viewModel
         navigationController.pushViewController(detailVC, animated: true)
     }
+
 }

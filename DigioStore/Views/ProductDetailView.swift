@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
-
 import UIKit
 
 class ProductDetailView: UIView {
@@ -16,6 +15,7 @@ class ProductDetailView: UIView {
     internal let productDescriptionLabel: UILabel
     internal let enableProductSwitch: UISwitch
     private var enableProductLabel: UILabel
+    private let errorLabel: UILabel
     
     init(productDetailViewModel: ProductDetailViewModelProtocol) {
         self.productDetailViewModel = productDetailViewModel
@@ -24,6 +24,7 @@ class ProductDetailView: UIView {
         self.productDescriptionLabel = UILabel()
         self.enableProductSwitch = UISwitch()
         self.enableProductLabel = UILabel()
+        self.errorLabel = UILabel()
         super.init(frame: .zero)
         setup()
     }
@@ -36,7 +37,15 @@ class ProductDetailView: UIView {
         productNameLabel.text = viewModel.productName
         productDescriptionLabel.text = viewModel.productDescription
         viewModel.loadImage(using: URLSession.shared) { [weak self] image in
-            self?.productImageView.image = image
+            guard let self = self else { return }
+            if let image = image {
+                self.productImageView.image = image
+                self.productImageView.isHidden = false
+                self.errorLabel.isHidden = true
+            } else {
+                self.productImageView.isHidden = true
+                self.errorLabel.isHidden = false
+            }
         }
     }
 }
@@ -49,9 +58,11 @@ extension ProductDetailView: SetupViewCode {
         addSubview(productDescriptionLabel)
         addSubview(enableProductSwitch)
         addSubview(enableProductLabel)
+        addSubview(errorLabel)
     }
     
     func configure() {
+        backgroundColor = .white
         
         productImageView.contentMode = .scaleAspectFit
         productImageView.translatesAutoresizingMaskIntoConstraints = false
@@ -68,6 +79,14 @@ extension ProductDetailView: SetupViewCode {
         enableProductLabel.text = "Habilitar Produto"
         enableProductLabel.textColor = .black
         enableProductLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        errorLabel.text = "Imagem não carregada"
+        errorLabel.textAlignment = .center
+        errorLabel.textColor = .red
+        errorLabel.font = UIFont.systemFont(ofSize: 12)
+        errorLabel.numberOfLines = 0
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.isHidden = true // Iniciar oculto
     }
     
     func render() {
@@ -80,6 +99,11 @@ extension ProductDetailView: SetupViewCode {
             productImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             productImageView.heightAnchor.constraint(equalToConstant: 100),
             productImageView.widthAnchor.constraint(equalToConstant: 100),
+            
+            errorLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            errorLabel.heightAnchor.constraint(equalToConstant: 100),
             
             productNameLabel.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 20),
             productNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),

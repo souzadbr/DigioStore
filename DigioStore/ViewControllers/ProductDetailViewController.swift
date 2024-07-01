@@ -4,17 +4,12 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
-
 import UIKit
 
 class ProductDetailViewController: UIViewController {
     
-    var viewModel: ProductDetailViewModelProtocol? {
-        didSet {
-            configureView()
-        }
-    }
-    internal let productDetailView: ProductDetailView
+    private var viewModel: ProductDetailViewModelProtocol
+    private let productDetailView: ProductDetailView
     
     init(viewModel: ProductDetailViewModelProtocol) {
         self.viewModel = viewModel
@@ -33,27 +28,6 @@ class ProductDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        navigationItem.title = "Produto"
-        productDetailView.enableProductSwitch.addTarget(self, action: #selector(enableProductSwitchChanged), for: .valueChanged)
-        configureView()
-    }
-    
-    private func configureView() {
-        guard let viewModel = viewModel else { return }
-        productDetailView.productNameLabel.text = viewModel.productName
         productDetailView.configure(with: viewModel)
     }
-    
-    @objc internal func enableProductSwitchChanged(_ sender: UISwitch) {
-        guard let viewModel = viewModel else { return }
-        if sender.isOn {
-            viewModel.showBottomSheet(on: self)
-        } else {
-            viewModel.showDisableAlert(on: self)
-        }
-    }
 }
-
-
-
-
