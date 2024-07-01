@@ -45,3 +45,4 @@ final class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.productsCount, mockService.mockData.products.count)
     }
 }
+

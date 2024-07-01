@@ -16,5 +16,17 @@ excluded:
   - fastlane
   - DigioStore/Generated
 
-line_length: 120
+line_length:
+  warning: 120
+  error: 150
+  ignores_comments: true
+  ignores_urls: true
+
+identifier_name:
+  min_length: 3
+  max_length: 40
+  excluded: # esses identificadores são permitidos, mesmo que não atendam aos critérios
+    - id
+    - URL
+    - GlobalAPIKey
 

@@ -100,4 +100,5 @@ class HomeViewModel: HomeViewModelProtocol {
         guard let urlString = digioStore?.cash.bannerURL else { return nil }
         return URL(string: urlString)
     }
+    
 }

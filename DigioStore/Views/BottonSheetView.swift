@@ -72,7 +72,7 @@ extension BottomSheetView: SetupViewCode {
     }
     
     func render() {
-        //Adicionar elementos de cores aqui se necessario.
+        // Adicionar elementos de cores aqui se necessario.
     }
     
     func setupConstraints() {
@@ -98,4 +98,5 @@ extension BottomSheetView: SetupViewCode {
             closeButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
+    
 }

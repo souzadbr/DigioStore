@@ -4,6 +4,7 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
+
 import UIKit
 
 class ProductCell: UICollectionViewCell {
@@ -61,7 +62,7 @@ class ProductCell: UICollectionViewCell {
     }
     
     private func loadImage(from url: URL) {
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
             if let error = error {
                 print("Failed to load image: \(error)")
@@ -89,4 +90,5 @@ class ProductCell: UICollectionViewCell {
         self.imageView.isHidden = true
         self.errorLabel.isHidden = false
     }
+    
 }

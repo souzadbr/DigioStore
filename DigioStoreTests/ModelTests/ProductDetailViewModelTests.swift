@@ -56,3 +56,4 @@ final class ProductDetailViewModelTests: XCTestCase {
         waitForExpectations(timeout: 5, handler: nil)
     }
 }
+
