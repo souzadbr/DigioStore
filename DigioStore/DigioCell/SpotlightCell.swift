@@ -21,7 +21,7 @@ class SpotlightCell: UICollectionViewCell {
     
     private let errorLabel: UILabel = {
         let label = UILabel()
-        label.text = "Image could not be loaded"
+        label.text = "Imagem não carregada"
         label.textAlignment = .center
         label.textColor = .red
         label.font = UIFont.systemFont(ofSize: 12)

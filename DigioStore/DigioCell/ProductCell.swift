@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
-
 import UIKit
 
 class ProductCell: UICollectionViewCell {
@@ -21,12 +20,13 @@ class ProductCell: UICollectionViewCell {
     
     private let errorLabel: UILabel = {
         let label = UILabel()
-        label.text = "Image could not be loaded"
+        label.text = "Imagem não carregada"
+        label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = .red
         label.font = UIFont.systemFont(ofSize: 12)
-        label.isHidden = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true // Iniciar oculto
         return label
     }()
     
@@ -66,24 +66,27 @@ class ProductCell: UICollectionViewCell {
             if let error = error {
                 print("Failed to load image: \(error)")
                 DispatchQueue.main.async {
-                    self.imageView.isHidden = true
-                    self.errorLabel.isHidden = false
+                    self.showErrorLabel()
                 }
                 return
             }
-            guard let data = data else {
+            guard let data = data, let image = UIImage(data: data) else {
                 DispatchQueue.main.async {
-                    self.imageView.isHidden = true
-                    self.errorLabel.isHidden = false
+                    self.showErrorLabel()
                 }
                 return
             }
             DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data)
+                self.imageView.image = image
                 self.imageView.isHidden = false
                 self.errorLabel.isHidden = true
             }
         }
         task.resume()
+    }
+    
+    private func showErrorLabel() {
+        self.imageView.isHidden = true
+        self.errorLabel.isHidden = false
     }
 }

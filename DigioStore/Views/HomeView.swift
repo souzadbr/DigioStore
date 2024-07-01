@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
-
 import UIKit
 
 class HomeView: UIView {
@@ -80,14 +79,14 @@ class HomeView: UIView {
     internal func updateUI() {
         if let url = homeViewModel?.cashBannerURL() {
             loadImage(from: url, into: cashBannerImageView, onFailure: {
-                // definir um placeholder ou mensagem de erro
-                self.cashBannerImageView.image = UIImage(named: "Sem carregamento de imagem")
+                self.cashBannerImageView.image = UIImage(named: "ImagemErro")
             })
+        } else {
+            cashBannerImageView.image = UIImage(named: "ImagemErro")
         }
         spotlightCollectionView.reloadData()
         productsCollectionView.reloadData()
     }
-    
     
     private func loadImage(from url: URL, into imageView: UIImageView, onFailure: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
@@ -165,6 +164,26 @@ extension HomeView: SetupViewCode {
         extraSpaceView.backgroundColor = .clear
         extraSpaceView.translatesAutoresizingMaskIntoConstraints = false
         
+        // Adicionar sombras
+        avatarImageView.layer.shadowColor = UIColor.black.cgColor
+        avatarImageView.layer.shadowOpacity = 0.25
+        avatarImageView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        avatarImageView.layer.shadowRadius = 4
+        
+        cashBannerImageView.layer.shadowColor = UIColor.black.cgColor
+        cashBannerImageView.layer.shadowOpacity = 0.25
+        cashBannerImageView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cashBannerImageView.layer.shadowRadius = 4
+        
+        spotlightCollectionView.layer.shadowColor = UIColor.black.cgColor
+        spotlightCollectionView.layer.shadowOpacity = 0.25
+        spotlightCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        spotlightCollectionView.layer.shadowRadius = 4
+        
+        productsCollectionView.layer.shadowColor = UIColor.black.cgColor
+        productsCollectionView.layer.shadowOpacity = 0.25
+        productsCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        productsCollectionView.layer.shadowRadius = 4
     }
     
     func render() {
