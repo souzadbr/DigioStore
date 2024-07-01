@@ -10,7 +10,7 @@ import XCTest
 
 final class ProductDetailViewModelTests: XCTestCase {
     var product: Products!
-    var viewModel: ProductDetailViewModel!
+    var viewModel: ProductDetailViewModelProtocol!
     var session: URLSession!
     
     override func setUpWithError() throws {
