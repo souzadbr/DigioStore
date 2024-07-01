@@ -192,12 +192,5 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
 Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens dos produtos retornava um erro de "Access Denied". 
 
 #### Erro de Exemplo que aparece no meu navegador, apesar disso a celula que retornaria essa imagem ao clicar leva para uma pagina de detalhes:
-
-```xml
-<Error>
   <Code>AccessDenied</Code>
-  <Message>Access Denied</Message>
-  <RequestId>BVV9TNB7RZYSZ0G9</RequestId>
-  <HostId>u1H0wbohaDrAS+G8FPuFtekoAjHZVdocW7rE0xhLgeS46KntuiZevwxUn76M0stOHfPSCw/+XUo=</HostId>
-</Error>
-
+  
