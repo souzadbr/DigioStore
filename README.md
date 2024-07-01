@@ -119,23 +119,8 @@ A tela inicial (`HomeViewController`) exibe uma saudação personalizada, uma co
 - **AppCoordinator** e **MainCoordinator**: Gerenciam a navegação e a coordenação entre as diferentes telas do aplicativo.
 - **HomeView**: Configura a interface do usuário e gerencia o layout dos componentes.
 
-## Problemas Encontrados
 
-### Problema de Acesso às Imagens
-
-Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens dos produtos retornava um erro de "Access Denied". 
-
-#### Erro de Exemplo que aparece no meu navegador, apesar disso a celula que retornaria essa imagem ao clicar leva para uma pagina de detalhes:
-
-```xml
-<Error>
-  <Code>AccessDenied</Code>
-  <Message>Access Denied</Message>
-  <RequestId>BVV9TNB7RZYSZ0G9</RequestId>
-  <HostId>u1H0wbohaDrAS+G8FPuFtekoAjHZVdocW7rE0xhLgeS46KntuiZevwxUn76M0stOHfPSCw/+XUo=</HostId>
-</Error>
-
-### Tratamento de Erro das Imagens
+### Tratamento de Erro das Imagens relacionado ao item 'Problemas encontrados' ao final do Readme. 
 
 O tratamento de erro da imagem foi implementado para todas as imagens, pois a terceira imagem da lista de produtos estava ficando em branco como 
 se nada tivesse ali. Agora, o usuário tem um feedback que ali deveria ter uma imagem.
@@ -199,10 +184,20 @@ Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull re
     ```
 5. Abra um Pull Request.
 
-### SwiftLint
 
-Fiz todas as configurações para o uso do SwiftLint para seguir algumas regras e com isso garantir boas práticas e padronização do código em alguns aspectos. Tentei diversas vezes integrar ele no meu Xcode no projeto, porém tive problemas de permissão no acesso ao arquivo pelo Xcode. Tentei resolver essas permissões de algumas formas que encontrei em pesquisas e não deu certo. 
+## Problemas Encontrados
 
-Já que estava atrapalhando o build do meu projeto, desfiz as configurações para vincular ele na minha IDE e mostrar as violações ali durante o Build. Infelizmente, nesse momento, meu projeto só tem acesso às violações rodando o SwiftLint no terminal.
+### Problema de Acesso às Imagens
 
-Fazendo isso, ele mostra a lista de violações e seus arquivos.
+Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens dos produtos retornava um erro de "Access Denied". 
+
+#### Erro de Exemplo que aparece no meu navegador, apesar disso a celula que retornaria essa imagem ao clicar leva para uma pagina de detalhes:
+
+```xml
+<Error>
+  <Code>AccessDenied</Code>
+  <Message>Access Denied</Message>
+  <RequestId>BVV9TNB7RZYSZ0G9</RequestId>
+  <HostId>u1H0wbohaDrAS+G8FPuFtekoAjHZVdocW7rE0xhLgeS46KntuiZevwxUn76M0stOHfPSCw/+XUo=</HostId>
+</Error>
+
