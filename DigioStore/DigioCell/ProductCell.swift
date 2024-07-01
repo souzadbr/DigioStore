@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
-
 import UIKit
 
 class ProductCell: UICollectionViewCell {
@@ -12,32 +11,41 @@ class ProductCell: UICollectionViewCell {
     
     private let imageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 15
-        imageView.layer.masksToBounds = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    private let errorLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Imagem não carregada"
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.textColor = .red
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true // Iniciar oculto
+        return label
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        // Configure shadow
-        contentView.layer.shadowColor = UIColor.black.cgColor
-        contentView.layer.shadowOpacity = 0.50
-        contentView.layer.shadowOffset = CGSize(width: 0, height: 2)
-        contentView.layer.shadowRadius = 4
-        contentView.layer.cornerRadius = 15
-        contentView.layer.masksToBounds = false
-        
-        // Add imageView to contentView
         contentView.addSubview(imageView)
+        contentView.addSubview(errorLabel)
+        
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            
+            errorLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            errorLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
+            errorLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            errorLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
     
@@ -46,16 +54,39 @@ class ProductCell: UICollectionViewCell {
     }
     
     func configure(with url: URL) {
-        loadImage(from: url, into: imageView)
+        imageView.isHidden = false
+        errorLabel.isHidden = true
+        
+        loadImage(from: url)
     }
     
-    private func loadImage(from url: URL, into imageView: UIImageView) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
+    private func loadImage(from url: URL) {
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+            guard let self = self else { return }
+            if let error = error {
+                print("Failed to load image: \(error)")
+                DispatchQueue.main.async {
+                    self.showErrorLabel()
+                }
+                return
+            }
+            guard let data = data, let image = UIImage(data: data) else {
+                DispatchQueue.main.async {
+                    self.showErrorLabel()
+                }
+                return
+            }
             DispatchQueue.main.async {
-                imageView.image = UIImage(data: data)
+                self.imageView.image = image
+                self.imageView.isHidden = false
+                self.errorLabel.isHidden = true
             }
         }
         task.resume()
+    }
+    
+    private func showErrorLabel() {
+        self.imageView.isHidden = true
+        self.errorLabel.isHidden = false
     }
 }

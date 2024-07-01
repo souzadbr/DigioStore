@@ -36,4 +36,9 @@ class BottomSheetViewController: UIViewController {
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
+    
+    // Método para acessar o closeButton em testes
+    func getCloseButton() -> UIButton {
+        return bottonSheetView.closeButton
+    }
 }

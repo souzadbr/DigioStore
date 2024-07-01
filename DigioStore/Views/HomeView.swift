@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
-
 import UIKit
 
 class HomeView: UIView {
@@ -25,6 +24,7 @@ class HomeView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white // Definindo cor de fundo branca
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -33,6 +33,7 @@ class HomeView: UIView {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .white
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         return collectionView
     }()
@@ -77,15 +78,24 @@ class HomeView: UIView {
     
     internal func updateUI() {
         if let url = homeViewModel?.cashBannerURL() {
-            loadImage(from: url, into: cashBannerImageView)
+            loadImage(from: url, into: cashBannerImageView, onFailure: {
+                self.cashBannerImageView.image = UIImage(named: "ImagemErro")
+            })
+        } else {
+            cashBannerImageView.image = UIImage(named: "ImagemErro")
         }
         spotlightCollectionView.reloadData()
         productsCollectionView.reloadData()
     }
     
-    private func loadImage(from url: URL, into imageView: UIImageView) {
+    private func loadImage(from url: URL, into imageView: UIImageView, onFailure: @escaping () -> Void) {
         let task = URLSession.shared.dataTask(with: url) { data, response, error in
-            guard let data = data, error == nil else { return }
+            guard let data = data, error == nil else {
+                DispatchQueue.main.async {
+                    onFailure()
+                }
+                return
+            }
             DispatchQueue.main.async {
                 imageView.image = UIImage(data: data)
             }
@@ -115,13 +125,16 @@ extension HomeView: SetupViewCode {
     
     func configure() {
         greetingLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        greetingLabel.backgroundColor = .clear
         greetingLabel.translatesAutoresizingMaskIntoConstraints = false
         
         avatarImageView.contentMode = .scaleAspectFill
         avatarImageView.layer.cornerRadius = 30
         avatarImageView.clipsToBounds = true
+        avatarImageView.backgroundColor = .clear
         avatarImageView.translatesAutoresizingMaskIntoConstraints = false
         
+        digioCashLabel.backgroundColor = .clear
         digioCashLabel.translatesAutoresizingMaskIntoConstraints = false
         
         cashBannerImageView.contentMode = .scaleAspectFit
@@ -136,21 +149,46 @@ extension HomeView: SetupViewCode {
         headerStackView.axis = .horizontal
         headerStackView.alignment = .center
         headerStackView.spacing = 8
+        headerStackView.backgroundColor = .clear
         headerStackView.translatesAutoresizingMaskIntoConstraints = false
         mainStackView.axis = .vertical
         mainStackView.spacing = 20
+        mainStackView.backgroundColor = .clear
         mainStackView.translatesAutoresizingMaskIntoConstraints = false
         
         cashStackView.axis = .vertical
         cashStackView.spacing = 8
+        cashStackView.backgroundColor = .clear
         cashStackView.translatesAutoresizingMaskIntoConstraints = false
         
+        extraSpaceView.backgroundColor = .clear
         extraSpaceView.translatesAutoresizingMaskIntoConstraints = false
         
+        // Adicionar sombras
+        avatarImageView.layer.shadowColor = UIColor.black.cgColor
+        avatarImageView.layer.shadowOpacity = 0.25
+        avatarImageView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        avatarImageView.layer.shadowRadius = 4
+        
+        cashBannerImageView.layer.shadowColor = UIColor.black.cgColor
+        cashBannerImageView.layer.shadowOpacity = 0.25
+        cashBannerImageView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        cashBannerImageView.layer.shadowRadius = 4
+        
+        spotlightCollectionView.layer.shadowColor = UIColor.black.cgColor
+        spotlightCollectionView.layer.shadowOpacity = 0.25
+        spotlightCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        spotlightCollectionView.layer.shadowRadius = 4
+        
+        productsCollectionView.layer.shadowColor = UIColor.black.cgColor
+        productsCollectionView.layer.shadowOpacity = 0.25
+        productsCollectionView.layer.shadowOffset = CGSize(width: 0, height: 2)
+        productsCollectionView.layer.shadowRadius = 4
     }
     
     func render() {
-        //Adicionar elementos de cores aqui se necessario. 
+        spotlightCollectionView.backgroundColor = .clear
+        productsCollectionView.backgroundColor = .clear
     }
     
     func setupConstraints() {

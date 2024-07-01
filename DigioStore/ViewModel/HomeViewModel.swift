@@ -25,6 +25,11 @@ protocol HomeViewModelProtocol: AnyObject {
 
 class HomeViewModel: HomeViewModelProtocol {
     private var digioStore: DigioStore?
+    private let service: DigioStoreServiceProtocol
+    
+    init(service: DigioStoreServiceProtocol = DigioStoreService()) {
+        self.service = service
+    }
     
     var avatarImage: UIImage? {
         return UIImage(named: "userAvatar")
@@ -78,9 +83,7 @@ class HomeViewModel: HomeViewModelProtocol {
         guard let products = digioStore?.products else { return nil }
         return products[index]
     }
-    
     func fetchDigioStore(completion: @escaping () -> Void) {
-        let service = DigioStoreService()
         service.fetchDigioStore { [weak self] result in
             switch result {
             case .success(let digioStore):
@@ -88,6 +91,7 @@ class HomeViewModel: HomeViewModelProtocol {
                 completion()
             case .failure(let error):
                 print("Error fetching data: \(error)")
+                completion()
             }
         }
     }

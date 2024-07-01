@@ -4,7 +4,6 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
-
 import UIKit
 
 class HomeViewController: UIViewController {
@@ -12,8 +11,8 @@ class HomeViewController: UIViewController {
     private var viewModel: HomeViewModelProtocol
     private let homeView: HomeView
     
-    init(viewModel:HomeViewModelProtocol){
-        self.viewModel =  viewModel
+    init(viewModel: HomeViewModelProtocol) {
+        self.viewModel = viewModel
         self.homeView = HomeView(homeViewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
     }
@@ -72,19 +71,18 @@ extension HomeViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == homeView.productsCollectionView {
             guard let product = viewModel.product(at: indexPath.item) else { return }
-            coordinator?.showProductDetail(with: product)
+            let productDetailViewModel = ProductDetailViewModel(product: product)
+            let productDetailViewController = ProductDetailViewController(viewModel: productDetailViewModel)
+            navigationController?.pushViewController(productDetailViewController, animated: true)
         }
     }
-    
 }
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == homeView.spotlightCollectionView {
             return CGSize(width: view.frame.width - 32, height: 200)
