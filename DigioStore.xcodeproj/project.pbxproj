@@ -273,8 +273,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6AFBDD912C2F2A71001339AB /* Build configuration list for PBXNativeTarget "DigioStore" */;
 			buildPhases = (
-				6AFBDD9A2C2F2CBC001339AB /* ShellScript */,
 				6AFBDD632C2F2A6F001339AB /* Sources */,
+				6AFBDD9A2C2F2CBC001339AB /* ShellScript */,
 				6AFBDD642C2F2A6F001339AB /* Frameworks */,
 				6AFBDD652C2F2A6F001339AB /* Resources */,
 			);

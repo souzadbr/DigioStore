@@ -121,5 +121,5 @@ extension ProductDetailView: SetupViewCode {
             enableProductLabel.leadingAnchor.constraint(equalTo: enableProductSwitch.trailingAnchor, constant: 8)
         ])
     }
+    
 }
-
