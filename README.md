@@ -127,7 +127,7 @@ se nada tivesse ali. Agora, o usuário tem um feedback que ali deveria ter uma i
 
 ### Motivo da Escolha da Arquitetura MVVM-C
 
-Foi a arquitetura que mais tive contato nos dois projetos que trabalhei tanto no Itaú, quanto na Porto Seguro. Tive contato com VIPER, mas muito 
+Foi a arquitetura que mais tive contato nos dois projetos que trabalhei tanto no Itaú, quanto na Porto Seguro. Tive contato com VIP, mas muito 
 pouco, então decidi fazer usando algo que vi mais presente nos projetos que vivenciei.
 
 ### Testes Unitários
