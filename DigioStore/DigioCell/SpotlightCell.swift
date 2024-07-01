@@ -61,7 +61,7 @@ class SpotlightCell: UICollectionViewCell {
     }
     
     private func loadImage(from url: URL) {
-        let task = URLSession.shared.dataTask(with: url) { [weak self] data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { [weak self] data, _, error in
             guard let self = self else { return }
             if let error = error {
                 print("Failed to load image: \(error)")
@@ -86,4 +86,5 @@ class SpotlightCell: UICollectionViewCell {
         }
         task.resume()
     }
+    
 }

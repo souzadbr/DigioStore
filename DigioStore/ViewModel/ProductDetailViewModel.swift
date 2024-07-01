@@ -4,6 +4,7 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
+
 import Foundation
 import UIKit
 
@@ -38,7 +39,7 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
             return
         }
         
-        let task = session.dataTask(with: url) { data, response, error in
+        let task = session.dataTask(with: url) { data, _, error in
             if let error = error {
                 print("Error loading image: \(error)")
                 completion(nil)
@@ -84,4 +85,5 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
         
         viewController.present(alert, animated: true, completion: nil)
     }
+    
 }

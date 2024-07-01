@@ -38,3 +38,4 @@ class MockURLProtocol: URLProtocol {
         // sem implementacao. 
     }
 }
+

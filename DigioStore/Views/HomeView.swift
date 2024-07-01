@@ -4,6 +4,7 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
+
 import UIKit
 
 class HomeView: UIView {
@@ -89,7 +90,7 @@ class HomeView: UIView {
     }
     
     private func loadImage(from url: URL, into imageView: UIImageView, onFailure: @escaping () -> Void) {
-        let task = URLSession.shared.dataTask(with: url) { data, response, error in
+        let task = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let data = data, error == nil else {
                 DispatchQueue.main.async {
                     onFailure()
@@ -214,4 +215,5 @@ extension HomeView: SetupViewCode {
             extraSpaceView.heightAnchor.constraint(equalToConstant: 20)
         ])
     }
+    
 }

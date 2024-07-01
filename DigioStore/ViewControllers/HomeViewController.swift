@@ -4,6 +4,7 @@
 //
 //  Created by Debora Rodrigues  on 28/06/24.
 //
+
 import UIKit
 
 class HomeViewController: UIViewController {
@@ -53,13 +54,19 @@ extension HomeViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == homeView.spotlightCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath) as! SpotlightCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath) as? SpotlightCell else {
+                // Tratamento em caso de falha, pode retornar uma célula padrão ou lançar um erro
+                return UICollectionViewCell()
+            }
             if let url = viewModel.spotlightURL(at: indexPath.item) {
                 cell.configure(with: url)
             }
             return cell
         } else if collectionView == homeView.productsCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as! ProductCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell else {
+                // Tratamento em caso de falha, pode retornar uma célula padrão ou lançar um erro
+                return UICollectionViewCell()
+            }
             if let url = viewModel.productURL(at: indexPath.item) {
                 cell.configure(with: url)
             }
@@ -98,4 +105,5 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         return 16
     }
+    
 }

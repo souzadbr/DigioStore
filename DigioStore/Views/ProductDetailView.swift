@@ -4,6 +4,7 @@
 //
 //  Created by Debora Rodrigues  on 29/06/24.
 //
+
 import UIKit
 
 class ProductDetailView: UIView {
@@ -120,4 +121,5 @@ extension ProductDetailView: SetupViewCode {
             enableProductLabel.leadingAnchor.constraint(equalTo: enableProductSwitch.trailingAnchor, constant: 8)
         ])
     }
+    
 }

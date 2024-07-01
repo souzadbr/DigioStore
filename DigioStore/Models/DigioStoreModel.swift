@@ -11,12 +11,6 @@ struct DigioStore: Decodable {
     let spotlight: [Spotlight]
     let products: [Products]
     let cash: Cash
-    
-    enum CodingKeys: String, CodingKey {
-        case spotlight = "spotlight"
-        case products = "products"
-        case cash = "cash"
-    }
 }
 
 struct Spotlight: Decodable {
