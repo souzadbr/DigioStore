@@ -46,7 +46,6 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
                 return
             }
             guard let data = data else {
-                print("No data found")
                 completion(nil)
                 return
             }
