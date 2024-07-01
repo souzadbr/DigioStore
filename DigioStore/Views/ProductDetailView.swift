@@ -52,6 +52,16 @@ class ProductDetailView: UIView {
             }
         }
     }
+    
+    @objc private func switchValueChanged(_ sender: UISwitch) {
+        guard let viewModel = productDetailViewModel, let viewController = sender.findViewController() else { return }
+        
+        if sender.isOn {
+            viewModel.showBottomSheet(on: viewController)
+        } else {
+            viewModel.showDisableAlert(on: viewController)
+        }
+    }
 }
 
 extension ProductDetailView: SetupViewCode {
@@ -63,6 +73,8 @@ extension ProductDetailView: SetupViewCode {
         addSubview(enableProductSwitch)
         addSubview(enableProductLabel)
         addSubview(errorLabel)
+        
+        enableProductSwitch.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
     }
     
     func configure() {
@@ -125,4 +137,16 @@ extension ProductDetailView: SetupViewCode {
         ])
     }
     
+}
+
+extension UIView {
+    func findViewController() -> UIViewController? {
+        if let nextResponder = next as? UIViewController {
+            return nextResponder
+        } else if let nextResponder = next as? UIView {
+            return nextResponder.findViewController()
+        } else {
+            return nil
+        }
+    }
 }
