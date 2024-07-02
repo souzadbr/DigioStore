@@ -191,7 +191,7 @@ Dependendo do shell que voce esta usando (Bash, Zsh, etc) voce precisa editar o 
     
 Depois de atualizar o PATH, verifique se o SwiftLint está acessível:
     
-    ```which swiftlint ```
+    which swiftlint
     
 Isso deve retornar /opt/homebrew/bin/swiftlint.
        
@@ -205,7 +205,8 @@ Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode
         5. Arraste a nova fase de execução para que fique abaixo de Compile Sources e acima de Link Binary With Libraries.
         6. No campo de script da nova fase de execução, adicione o seguinte:
     
-        ```if [ -x /opt/homebrew/bin/swiftlint ]; then
+        ```
+        if [ -x /opt/homebrew/bin/swiftlint ]; then
         /opt/homebrew/bin/swiftlint
       else
         echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
