@@ -163,7 +163,7 @@ Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens d
 
 - Instalar Swiftlint usando Homebrew:
 
- 1. brew install swiftlint
+ 1. ``` brew install swiftlint ```
 
 Tive alguns problemas para configurar o Swiftlint e fiquei um bom tempo tentando resolver. Ele rodoava e trazia as 
 violacoes no terminal, mas o Xcode nao conseguia se vincular para rodar junto com o build. 
@@ -173,8 +173,8 @@ Passos que ocorreram para resolver o problema:
 1. Descobrir o prefixo do Homebrew:
 Primeiro verifique onde o Homebrew esta instalado:
 
-brew --prefix 
-
+   ``` brew --prefix ```
+   
 Isso retorna  o caminho do prefixo onde o Homebrew esta instalado.
 
 2. Adicionar o caminho ao PATH
@@ -184,15 +184,16 @@ ao PATH no seu shell de configuracao.
 Dependendo do shell que voce esta usando (Bash, Zsh, etc) voce precisa editar o arquivo de configuracao correspondente:
 
 - Para Bash (~/.bash_profile ou ~/.bashrc):
-    
-    echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.bash_profile
-    
+
+   ``` echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.bash_profile ```
+   
 - Verificando o PATH:
     Depois de atualizar o PATH, verifique se o SwiftLint está acessível:
     
-    which swiftlint
+    ```which swiftlint ```
     Isso deve retornar /opt/homebrew/bin/swiftlint.
-
+       
+   
 Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode
     Para garantir que o SwiftLint é executado corretamente ao buildar seu projeto no Xcode, atualize o script de fase de construção para usar o caminho completo:
         1. No navegador de projetos, selecione seu projeto.
@@ -202,15 +203,14 @@ Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode
         5. Arraste a nova fase de execução para que fique abaixo de Compile Sources e acima de Link Binary With Libraries.
         6. No campo de script da nova fase de execução, adicione o seguinte:
     
-    
-    if [ -x /opt/homebrew/bin/swiftlint ]; then
+        ```if [ -x /opt/homebrew/bin/swiftlint ]; then
         /opt/homebrew/bin/swiftlint
       else
         echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-   Fi
-    
+        Fi ```
+   
     Reiniciar o Xcode
     Após atualizar o script de fase de construção, reinicie o Xcode para garantir que as alterações sejam aplicadas.
     Verificar o Funcionamento
-        1. Faça uma limpeza do projeto no Xcode (Cmd + Shift + K).
-        2. Recompile o projeto (Cmd + B).  
+        1. Faça uma limpeza do projeto no Xcode (`Cmd + Shift + K`).
+        2. Recompile o projeto (`Cmd + B`).  
