@@ -106,7 +106,7 @@ na questão de testes e manutenção:
 ### Melhorias que podem ser feitas posteriomente:
 - Swiftgen (Localizeble.string)
     
-### Instalação
+### Instalação do projeto DigioStore:
 
 1. Clone o repositório:
     ```bash
