@@ -20,6 +20,9 @@
 		6A66245B2C30EC700002E760 /* MockDigioStoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A66245A2C30EC700002E760 /* MockDigioStoreService.swift */; };
 		6A66245D2C3199A20002E760 /* ProductDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A66245C2C3199A20002E760 /* ProductDetailViewModelTests.swift */; };
 		6A6624602C319F770002E760 /* MockURLProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A66245F2C319F770002E760 /* MockURLProtocol.swift */; };
+		6A6B24DB2C3436AA009F0E91 /* MainMockCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6B24DA2C3436AA009F0E91 /* MainMockCoordinator.swift */; };
+		6A6B24DE2C343790009F0E91 /* HomeViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6B24DD2C343790009F0E91 /* HomeViewControllerTests.swift */; };
+		6A6B24E02C34381B009F0E91 /* MockHomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A6B24DF2C34381B009F0E91 /* MockHomeViewModel.swift */; };
 		6AFBDD6B2C2F2A6F001339AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDD6A2C2F2A6F001339AB /* AppDelegate.swift */; };
 		6AFBDD6D2C2F2A6F001339AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDD6C2C2F2A6F001339AB /* SceneDelegate.swift */; };
 		6AFBDD6F2C2F2A6F001339AB /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFBDD6E2C2F2A6F001339AB /* HomeViewController.swift */; };
@@ -67,6 +70,9 @@
 		6A66245A2C30EC700002E760 /* MockDigioStoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDigioStoreService.swift; sourceTree = "<group>"; };
 		6A66245C2C3199A20002E760 /* ProductDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDetailViewModelTests.swift; sourceTree = "<group>"; };
 		6A66245F2C319F770002E760 /* MockURLProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockURLProtocol.swift; sourceTree = "<group>"; };
+		6A6B24DA2C3436AA009F0E91 /* MainMockCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMockCoordinator.swift; sourceTree = "<group>"; };
+		6A6B24DD2C343790009F0E91 /* HomeViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewControllerTests.swift; sourceTree = "<group>"; };
+		6A6B24DF2C34381B009F0E91 /* MockHomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockHomeViewModel.swift; sourceTree = "<group>"; };
 		6AFBDD672C2F2A6F001339AB /* DigioStore.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DigioStore.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6AFBDD6A2C2F2A6F001339AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6AFBDD6C2C2F2A6F001339AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -142,9 +148,9 @@
 		6A66245E2C319C880002E760 /* MockServiceTest */ = {
 			isa = PBXGroup;
 			children = (
-				6A66245A2C30EC700002E760 /* MockDigioStoreService.swift */,
-				6A66245F2C319F770002E760 /* MockURLProtocol.swift */,
-				6A2AB1EC2C330933001F5D86 /* MockProductDetailViewModel.swift */,
+				6A6B24E32C34388E009F0E91 /* MockCoordinator */,
+				6A6B24E22C343874009F0E91 /* MockViewModel */,
+				6A6B24E12C343855009F0E91 /* MockService */,
 			);
 			path = MockServiceTest;
 			sourceTree = "<group>";
@@ -156,6 +162,40 @@
 				6A66245C2C3199A20002E760 /* ProductDetailViewModelTests.swift */,
 			);
 			path = ModelTests;
+			sourceTree = "<group>";
+		};
+		6A6B24DC2C343752009F0E91 /* ControllersTests */ = {
+			isa = PBXGroup;
+			children = (
+				6A6B24DD2C343790009F0E91 /* HomeViewControllerTests.swift */,
+			);
+			path = ControllersTests;
+			sourceTree = "<group>";
+		};
+		6A6B24E12C343855009F0E91 /* MockService */ = {
+			isa = PBXGroup;
+			children = (
+				6A66245A2C30EC700002E760 /* MockDigioStoreService.swift */,
+				6A66245F2C319F770002E760 /* MockURLProtocol.swift */,
+			);
+			path = MockService;
+			sourceTree = "<group>";
+		};
+		6A6B24E22C343874009F0E91 /* MockViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				6A2AB1EC2C330933001F5D86 /* MockProductDetailViewModel.swift */,
+				6A6B24DF2C34381B009F0E91 /* MockHomeViewModel.swift */,
+			);
+			path = MockViewModel;
+			sourceTree = "<group>";
+		};
+		6A6B24E32C34388E009F0E91 /* MockCoordinator */ = {
+			isa = PBXGroup;
+			children = (
+				6A6B24DA2C3436AA009F0E91 /* MainMockCoordinator.swift */,
+			);
+			path = MockCoordinator;
 			sourceTree = "<group>";
 		};
 		6AFBDD5E2C2F2A6F001339AB = {
@@ -201,6 +241,7 @@
 		6AFBDD802C2F2A71001339AB /* DigioStoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				6A6B24DC2C343752009F0E91 /* ControllersTests */,
 				6A6624632C31AA8F0002E760 /* ModelTests */,
 				6A66245E2C319C880002E760 /* MockServiceTest */,
 			);
@@ -449,10 +490,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6A66245B2C30EC700002E760 /* MockDigioStoreService.swift in Sources */,
+				6A6B24E02C34381B009F0E91 /* MockHomeViewModel.swift in Sources */,
 				6A2AB1ED2C330933001F5D86 /* MockProductDetailViewModel.swift in Sources */,
 				6AFBDD822C2F2A71001339AB /* HomeViewModelTests.swift in Sources */,
 				6A66245D2C3199A20002E760 /* ProductDetailViewModelTests.swift in Sources */,
+				6A6B24DE2C343790009F0E91 /* HomeViewControllerTests.swift in Sources */,
 				6A6624602C319F770002E760 /* MockURLProtocol.swift in Sources */,
+				6A6B24DB2C3436AA009F0E91 /* MainMockCoordinator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
