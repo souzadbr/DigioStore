@@ -127,7 +127,7 @@ na questão de testes e manutenção:
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
 
-### Para Contribuir no projeto DigioStore
+### Para Contribuir no desenvolivimento do projeto DigioStore
 
 1. Faça um fork do projeto.
     ```bash
