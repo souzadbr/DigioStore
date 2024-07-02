@@ -164,3 +164,18 @@ Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens d
 #### Erro de Exemplo que aparece no meu navegador, apesar disso a celula que retornaria essa imagem ao clicar leva para uma pagina de detalhes:
   <Code>AccessDenied</Code>
   
+
+## Capturas de Tela
+
+### Tela Inicial
+![Tela inicial - Home](/Users/deborarodrigues/Documents/DigioStore/Screenshots/TelaHome.png)
+### Tela de Detalhes do Produto
+![Tela de Detalhes do Produto](/Users/deborarodrigues/Documents/DigioStore/Screenshots/TelaDetalheComImagemOK.png)
+### Tela de Detalhe do Produto com Bottonsheet ativa 
+![Tela de Detalhe com BottonSheet ativa](/Users/deborarodrigues/Documents/DigioStore/Screenshots/BottonSheet.png)
+### Tela de Detalhe do Produto com Alert ativo
+![Tela de Detalhe com Alert](/Users/deborarodrigues/Documents/DigioStore/Screenshots/TelaDetalheAlert.png)
+
+### Tela de Detalhe do Produto com imagem que nem vem do servico com erro tratado dando feedback ao usuario. 
+![Tela de detalhe da Imagem que estou com acesso negado no servico com erro tratado](/Users/deborarodrigues/Documents/DigioStore/Screenshots/TelaDetalheProdutoExemploErro.png)
+
