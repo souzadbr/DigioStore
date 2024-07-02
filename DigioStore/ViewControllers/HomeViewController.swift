@@ -10,7 +10,7 @@ import UIKit
 class HomeViewController: UIViewController {
     var coordinator: MainCoordinator?
     private var viewModel: HomeViewModelProtocol
-    private let homeView: HomeView
+    internal let homeView: HomeView
     
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
