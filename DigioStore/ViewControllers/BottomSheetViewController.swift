@@ -15,16 +15,16 @@ class BottomSheetViewController: UIViewController {
         self.bottonSheetView =  BottomSheetView()
         super.init(nibName: nil, bundle: nil)
     }
-    
+  
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-        
+       
     }
-    
+   
     override func loadView() {
         view = bottonSheetView
     }
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -32,7 +32,7 @@ class BottomSheetViewController: UIViewController {
         view.clipsToBounds = true
         bottonSheetView.closeButton.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
     }
-    
+   
     @objc private func closeButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
@@ -41,5 +41,5 @@ class BottomSheetViewController: UIViewController {
     func getCloseButton() -> UIButton {
         return bottonSheetView.closeButton
     }
-    
+   
 }

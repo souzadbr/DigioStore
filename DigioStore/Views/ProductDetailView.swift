@@ -35,18 +35,15 @@ class ProductDetailView: UIView {
     }
     
     func configure(with viewModel: ProductDetailViewModelProtocol) {
-        print("Configuring view with view model")
         productNameLabel.text = viewModel.productName
         productDescriptionLabel.text = viewModel.productDescription
         viewModel.loadImage(using: URLSession.shared) { [weak self] image in
             guard let self = self else { return }
             if let image = image {
-                print("Image loaded successfully")
                 self.productImageView.image = image
                 self.productImageView.isHidden = false
                 self.errorLabel.isHidden = true
             } else {
-                print("Failed to load image")
                 self.productImageView.isHidden = true
                 self.errorLabel.isHidden = false
             }
