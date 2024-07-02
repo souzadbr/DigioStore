@@ -88,7 +88,7 @@ na questão de testes e manutenção:
 
 1. **Desacoplamento**: A View vai ter uma referência do protocolo e não diretamente da ViewModel e com isso ela não conhece a implementação,
  mas sabe que o protocolo é cumprido pela ViewModel.
-2. **Testes Unitários**: Facilita a criação de mocks e stubs para testes.
+2. **Testes Unitários**: Facilita a criação de mocks para testes.
 3. **Facilidade de Manutenção**: Reduz o impacto das mudanças na implementação da ViewModel.
 4. **Reutilização**: Permite que o protocolo seja reutilizado em diferentes contextos. Por exemplo, se você tiver diferentes tipos de ViewModels
  que compartilham uma interface comum, eles podem todos implementar o mesmo protocolo.
