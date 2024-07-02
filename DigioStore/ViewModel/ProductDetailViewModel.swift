@@ -56,6 +56,7 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
             bottomSheetVC.modalPresentationStyle = .pageSheet
             if let bottomSheet = bottomSheetVC.sheetPresentationController {
                 bottomSheet.detents = [.medium()]
+                bottomSheet.prefersGrabberVisible = true
             }
         } else {
             bottomSheetVC.modalPresentationStyle = .overFullScreen
