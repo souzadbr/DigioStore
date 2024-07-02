@@ -103,7 +103,7 @@ na questão de testes e manutenção:
 - Deployment Target iOS 12
 - Swiftlint (integrado com Xcode, passo a passo no fim do readme)
 
-### Melhorias que podems ser feitas posteriomente:
+### Melhorias que podem ser feitas posteriomente:
 - Swiftgen (Localizeble.string)
     
 ### Instalação
