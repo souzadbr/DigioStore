@@ -103,10 +103,10 @@ na questão de testes e manutenção:
 - Deployment Target iOS 12
 - Swiftlint (integrado com Xcode, passo a passo no fim do readme)
 
-### Melhorias que podems ser feitas posteriomente:
+### Melhorias que podem ser feitas posteriomente:
 - Swiftgen (Localizeble.string)
     
-### Instalação
+### Instalação do projeto DigioStore:
 
 1. Clone o repositório:
     ```bash
@@ -120,14 +120,14 @@ na questão de testes e manutenção:
     ```
 
 3. Execute o projeto:
-    - Selecione o dispositivo ou simulador desejado: durante o desenvolvumentofoi feito teste no dispositivo iphone 15 pro. 
+    - Selecione o dispositivo ou simulador desejado: durante o desenvolvimento foi feito teste no dispositivo Iphone 15 pro. 
     - Clique no botão "Run" ou pressione `Cmd + R`.
 
-## Contribuição com DigioStore
+## Contribuição para o projeto DigioStore
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
 
-### Para Contribuir no projeto DigioStore
+### Para Contribuir no desenvolivimento do projeto DigioStore
 
 1. Faça um fork do projeto.
     ```bash
@@ -155,7 +155,8 @@ Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens d
 
 #### Erro de Exemplo que aparece no meu navegador, apesar disso a celula que retornaria essa imagem ao clicar leva para uma pagina de detalhes:
   <Code>AccessDenied</Code>
-  
+ 
+ Usei esse erro como oportunidade de tratar um erro no projeto. 
 
 ## Swiftlint 
 
