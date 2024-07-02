@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     var coordinator: MainCoordinator?
     private var viewModel: HomeViewModelProtocol
     private let homeView: HomeView
-    
+   
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         self.homeView = HomeView(homeViewModel: viewModel)
@@ -30,10 +30,10 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         homeView.setupBindings()
-        
+      
         homeView.spotlightCollectionView.dataSource = self
         homeView.spotlightCollectionView.delegate = self
-        
+       
         homeView.productsCollectionView.dataSource = self
         homeView.productsCollectionView.delegate = self
     
@@ -79,7 +79,7 @@ extension HomeViewController: UICollectionViewDelegate {
             guard let product = viewModel.product(at: indexPath.item) else { return }
             let productDetailViewModel = ProductDetailViewModel(product: product)
             let productDetailViewController = ProductDetailViewController(viewModel: productDetailViewModel)
-            navigationController?.pushViewController(productDetailViewController, animated: true)
+            coordinator?.showProductDetail(with: product)
         }
     }
 }
