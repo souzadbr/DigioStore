@@ -11,7 +11,7 @@ class HomeViewController: UIViewController {
     var coordinator: MainCoordinator?
     private var viewModel: HomeViewModelProtocol
     private let homeView: HomeView
-   
+    
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         self.homeView = HomeView(homeViewModel: viewModel)
@@ -30,13 +30,13 @@ class HomeViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         homeView.setupBindings()
-      
+        
         homeView.spotlightCollectionView.dataSource = self
         homeView.spotlightCollectionView.delegate = self
-       
+        
         homeView.productsCollectionView.dataSource = self
         homeView.productsCollectionView.delegate = self
-    
+        
         homeView.fetchUpdateUI()
     }
 }
@@ -51,7 +51,7 @@ extension HomeViewController: UICollectionViewDataSource {
         }
         return 0
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == homeView.spotlightCollectionView {
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath)
@@ -95,7 +95,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         return CGSize(width: 200, height: 200) // Valor padrão para o caso de erro
     }
-  
+    
     func collectionView(_ collectionView: UICollectionView, 
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -104,5 +104,5 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         return 16
     }
- 
+    
 }

@@ -13,7 +13,6 @@ protocol SetupViewCode {
     func setupConstraints()
     func render()
     func setup()
-    
 }
 
 extension SetupViewCode {
