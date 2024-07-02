@@ -29,6 +29,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        configBackBarButton()
         homeView.setupBindings()
         
         homeView.spotlightCollectionView.dataSource = self
@@ -38,6 +39,13 @@ class HomeViewController: UIViewController {
         homeView.productsCollectionView.delegate = self
         
         homeView.fetchUpdateUI()
+    }
+    
+    func configBackBarButton() {
+        let backButton = UIBarButtonItem()
+        backButton.title = "Voltar"
+        backButton.tintColor = .black
+        navigationItem.backBarButtonItem = backButton
     }
 }
 
@@ -86,7 +94,7 @@ extension HomeViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, 
+    func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == homeView.spotlightCollectionView {
             return CGSize(width: view.frame.width - 32, height: 200)
@@ -96,7 +104,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: 200, height: 200) // Valor padrão para o caso de erro
     }
     
-    func collectionView(_ collectionView: UICollectionView, 
+    func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == homeView.productsCollectionView {
