@@ -8,7 +8,7 @@
 import UIKit
 
 class HomeView: UIView {
-    
+ 
     private weak var homeViewModel: HomeViewModelProtocol?
     
     private let avatarImageView: UIImageView

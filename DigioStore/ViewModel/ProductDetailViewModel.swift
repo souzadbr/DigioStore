@@ -11,34 +11,27 @@ import UIKit
 protocol ProductDetailViewModelProtocol: AnyObject {
     var productName: String { get }
     var productDescription: String { get }
-    
     func loadImage(using session: URLSession, completion: @escaping (UIImage?) -> Void)
     func showBottomSheet(on viewController: UIViewController)
     func showDisableAlert(on viewController: UIViewController)
 }
 
 class ProductDetailViewModel: ProductDetailViewModelProtocol {
-    
     private let product: Products
-    
     init(product: Products) {
         self.product = product
     }
-    
     var productName: String {
         return product.name
     }
-    
     var productDescription: String {
         return product.description
     }
-    
     func loadImage(using session: URLSession = URLSession.shared, completion: @escaping (UIImage?) -> Void) {
         guard let url = URL(string: product.imageURL) else {
             completion(nil)
             return
         }
-        
         let task = session.dataTask(with: url) { data, _, error in
             if let error = error {
                 print("Error loading image: \(error)")
@@ -72,7 +65,10 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
     }
     
     func showDisableAlert(on viewController: UIViewController) {
-        let alert = UIAlertController(title: nil, message: "Este produto está sendo desabilitado e não contará na próxima fatura do seu cartão Digio.", preferredStyle: .alert)
+        let alert = UIAlertController(
+            title: nil,
+            message: "Este produto está sendo desabilitado e não contará na próxima fatura do seu cartão Digio.",
+            preferredStyle: .alert)
         
         if #available(iOS 13.0, *) {
             let imageView = UIImageView(frame: CGRect(x: 220, y: 10, width: 40, height: 40))
