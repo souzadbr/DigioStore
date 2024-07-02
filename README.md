@@ -120,10 +120,10 @@ na questão de testes e manutenção:
     ```
 
 3. Execute o projeto:
-    - Selecione o dispositivo ou simulador desejado: durante o desenvolvumentofoi feito teste no dispositivo iphone 15 pro. 
+    - Selecione o dispositivo ou simulador desejado: durante o desenvolvimento foi feito teste no dispositivo Iphone 15 pro. 
     - Clique no botão "Run" ou pressione `Cmd + R`.
 
-## Contribuição com DigioStore
+## Contribuição para o projeto DigioStore
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
 
