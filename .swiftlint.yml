@@ -1,7 +1,5 @@
 disabled_rules:
-  - line_length
-  - trailing_whitespace
-  - identifier_name
+ - missing_docs
   
 opt_in_rules:
   - empty_count
@@ -29,4 +27,3 @@ identifier_name:
     - id
     - URL
     - GlobalAPIKey
-

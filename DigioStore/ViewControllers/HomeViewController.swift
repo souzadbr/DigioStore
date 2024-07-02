@@ -36,7 +36,7 @@ class HomeViewController: UIViewController {
         
         homeView.productsCollectionView.dataSource = self
         homeView.productsCollectionView.delegate = self
-        
+    
         homeView.fetchUpdateUI()
     }
 }
@@ -51,22 +51,18 @@ extension HomeViewController: UICollectionViewDataSource {
         }
         return 0
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == homeView.spotlightCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath) as? SpotlightCell else {
-                // Tratamento em caso de falha, pode retornar uma célula padrão ou lançar um erro
-                return UICollectionViewCell()
-            }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath)
+                    as? SpotlightCell else { return UICollectionViewCell() }
             if let url = viewModel.spotlightURL(at: indexPath.item) {
                 cell.configure(with: url)
             }
             return cell
         } else if collectionView == homeView.productsCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath) as? ProductCell else {
-                // Tratamento em caso de falha, pode retornar uma célula padrão ou lançar um erro
-                return UICollectionViewCell()
-            }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath)
+                    as? ProductCell else { return UICollectionViewCell() }
             if let url = viewModel.productURL(at: indexPath.item) {
                 cell.configure(with: url)
             }
@@ -90,7 +86,8 @@ extension HomeViewController: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == homeView.spotlightCollectionView {
             return CGSize(width: view.frame.width - 32, height: 200)
         } else if collectionView == homeView.productsCollectionView {
@@ -98,12 +95,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         return CGSize(width: 200, height: 200) // Valor padrão para o caso de erro
     }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+  
+    func collectionView(_ collectionView: UICollectionView, 
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         if collectionView == homeView.productsCollectionView {
             return 15
         }
         return 16
     }
-    
+ 
 }
