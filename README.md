@@ -155,7 +155,8 @@ Durante o desenvolvimento, encontrei um problema onde uma das URLs das imagens d
 
 #### Erro de Exemplo que aparece no meu navegador, apesar disso a celula que retornaria essa imagem ao clicar leva para uma pagina de detalhes:
   <Code>AccessDenied</Code>
-  
+ 
+ Usei esse erro como oportunidade de tratar um erro no projeto. 
 
 ## Swiftlint 
 
