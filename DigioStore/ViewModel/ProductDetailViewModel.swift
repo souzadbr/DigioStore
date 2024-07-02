@@ -49,7 +49,6 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
         }
         task.resume()
     }
-    
     func showBottomSheet(on viewController: UIViewController) {
         let bottomSheetVC = BottomSheetViewController()
         if #available(iOS 15.0, *) {
@@ -61,25 +60,19 @@ class ProductDetailViewModel: ProductDetailViewModelProtocol {
         } else {
             bottomSheetVC.modalPresentationStyle = .overFullScreen
         }
-        
         viewController.present(bottomSheetVC, animated: true, completion: nil)
     }
-    
     func showDisableAlert(on viewController: UIViewController) {
         let alert = UIAlertController(
             title: nil,
             message: "Este produto está sendo desabilitado e não contará na próxima fatura do seu cartão Digio.",
             preferredStyle: .alert)
-        
         if #available(iOS 13.0, *) {
             let imageView = UIImageView(frame: CGRect(x: 220, y: 10, width: 40, height: 40))
             alert.view.addSubview(imageView)
         }
-        
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         alert.addAction(okAction)
-        
         viewController.present(alert, animated: true, completion: nil)
     }
-    
 }

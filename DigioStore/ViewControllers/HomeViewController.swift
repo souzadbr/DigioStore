@@ -11,36 +11,28 @@ class HomeViewController: UIViewController {
     var coordinator: MainCoordinator?
     private var viewModel: HomeViewModelProtocol
     internal let homeView: HomeView
-    
     init(viewModel: HomeViewModelProtocol) {
         self.viewModel = viewModel
         self.homeView = HomeView(homeViewModel: viewModel)
         super.init(nibName: nil, bundle: nil)
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     override func loadView() {
         view = homeView
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         configBackBarButton()
         homeView.setupBindings()
-        
         homeView.spotlightCollectionView.dataSource = self
         homeView.spotlightCollectionView.delegate = self
-        
         homeView.productsCollectionView.dataSource = self
         homeView.productsCollectionView.delegate = self
-        
         homeView.fetchUpdateUI()
     }
-    
     func configBackBarButton() {
         let backButton = UIBarButtonItem()
         backButton.title = "Voltar"
@@ -59,18 +51,21 @@ extension HomeViewController: UICollectionViewDataSource {
         }
         return 0
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == homeView.spotlightCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SpotlightCell.reuseIdentifier, for: indexPath)
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: SpotlightCell.reuseIdentifier,
+                for: indexPath)
                     as? SpotlightCell else { return UICollectionViewCell() }
             if let url = viewModel.spotlightURL(at: indexPath.item) {
                 cell.configure(with: url)
             }
             return cell
         } else if collectionView == homeView.productsCollectionView {
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ProductCell.reuseIdentifier, for: indexPath)
-                    as? ProductCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: ProductCell.reuseIdentifier,
+                for: indexPath) as? ProductCell else { return UICollectionViewCell() }
             if let url = viewModel.productURL(at: indexPath.item) {
                 cell.configure(with: url)
             }
@@ -79,23 +74,22 @@ extension HomeViewController: UICollectionViewDataSource {
         return UICollectionViewCell()
     }
 }
-
 // MARK: - UICollectionViewDelegate
 extension HomeViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == homeView.productsCollectionView {
             guard let product = viewModel.product(at: indexPath.item) else { return }
             let productDetailViewModel = ProductDetailViewModel(product: product)
-            let productDetailViewController = ProductDetailViewController(viewModel: productDetailViewModel)
+            _ = ProductDetailViewController(viewModel: productDetailViewModel)
             coordinator?.showProductDetail(with: product)
         }
     }
 }
-
 // MARK: - UICollectionViewDelegateFlowLayout
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,sizeForItemAt indexPath: IndexPath) -> CGSize {
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         if collectionView == homeView.spotlightCollectionView {
             return CGSize(width: view.frame.width - 32, height: 200)
         } else if collectionView == homeView.productsCollectionView {
@@ -103,7 +97,6 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         return CGSize(width: 200, height: 200) // Valor padrão para o caso de erro
     }
-    
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -112,5 +105,4 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         }
         return 16
     }
-    
 }

@@ -25,7 +25,6 @@ protocol HomeViewModelProtocol: AnyObject {
 class HomeViewModel: HomeViewModelProtocol {
     private var digioStore: DigioStore?
     private let service: DigioStoreServiceProtocol
-    
     init(service: DigioStoreServiceProtocol = DigioStoreService()) {
         self.service = service
     }
@@ -89,5 +88,4 @@ class HomeViewModel: HomeViewModelProtocol {
         guard let urlString = digioStore?.cash.bannerURL else { return nil }
         return URL(string: urlString)
     }
-   
 }

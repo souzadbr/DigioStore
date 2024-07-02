@@ -11,7 +11,6 @@ class ProductDetailViewController: UIViewController {
 
     private var viewModel: ProductDetailViewModelProtocol
     private let productDetailView: ProductDetailView
-    
     init(viewModel: ProductDetailViewModelProtocol) {
         self.viewModel = viewModel
         self.productDetailView = ProductDetailView(productDetailViewModel: viewModel)
@@ -31,5 +30,4 @@ class ProductDetailViewController: UIViewController {
         view.backgroundColor = .white
         productDetailView.configure(with: viewModel)
     }
-
 }

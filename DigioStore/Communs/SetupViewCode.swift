@@ -22,5 +22,4 @@ extension SetupViewCode {
         setupConstraints()
         render()
     }
-    
 }

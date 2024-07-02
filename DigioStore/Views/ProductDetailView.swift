@@ -8,16 +8,13 @@
 import UIKit
 
 class ProductDetailView: UIView {
-    
     private weak var productDetailViewModel: ProductDetailViewModelProtocol?
-    
     internal let productImageView: UIImageView
     internal let productNameLabel: UILabel
     internal let productDescriptionLabel: UILabel
     internal let enableProductSwitch: UISwitch
     private var enableProductLabel: UILabel
     internal let errorLabel: UILabel
-    
     init(productDetailViewModel: ProductDetailViewModelProtocol) {
         self.productDetailViewModel = productDetailViewModel
         self.productImageView = UIImageView()
@@ -29,11 +26,9 @@ class ProductDetailView: UIView {
         super.init(frame: .zero)
         setup()
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     func configure(with viewModel: ProductDetailViewModelProtocol) {
         productNameLabel.text = viewModel.productName
         productDescriptionLabel.text = viewModel.productDescription
@@ -49,10 +44,8 @@ class ProductDetailView: UIView {
             }
         }
     }
-    
     @objc private func switchValueChanged(_ sender: UISwitch) {
         guard let viewModel = productDetailViewModel, let viewController = sender.findViewController() else { return }
-        
         if sender.isOn {
             viewModel.showBottomSheet(on: viewController)
         } else {
@@ -62,7 +55,6 @@ class ProductDetailView: UIView {
 }
 
 extension ProductDetailView: SetupViewCode {
-    
     func setupView() {
         addSubview(productImageView)
         addSubview(productNameLabel)
@@ -70,29 +62,21 @@ extension ProductDetailView: SetupViewCode {
         addSubview(enableProductSwitch)
         addSubview(enableProductLabel)
         addSubview(errorLabel)
-        
         enableProductSwitch.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
     }
-    
     func configure() {
         backgroundColor = .white
-        
         productImageView.contentMode = .scaleAspectFit
         productImageView.translatesAutoresizingMaskIntoConstraints = false
-        
         productNameLabel.font = UIFont.boldSystemFont(ofSize: 24)
         productNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         productDescriptionLabel.numberOfLines = 0
         productDescriptionLabel.textColor = .black
         productDescriptionLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         enableProductSwitch.translatesAutoresizingMaskIntoConstraints = false
-        
         enableProductLabel.text = "Habilitar Produto"
         enableProductLabel.textColor = .black
         enableProductLabel.translatesAutoresizingMaskIntoConstraints = false
-        
         errorLabel.text = "Imagem não carregada"
         errorLabel.textAlignment = .center
         errorLabel.textColor = .red
@@ -101,39 +85,31 @@ extension ProductDetailView: SetupViewCode {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.isHidden = true // Iniciar oculto
     }
-    
     func render() {
         productNameLabel.textColor = .black
     }
-    
     func setupConstraints() {
         NSLayoutConstraint.activate([
             productImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             productImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             productImageView.heightAnchor.constraint(equalToConstant: 100),
             productImageView.widthAnchor.constraint(equalToConstant: 100),
-            
             errorLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             errorLabel.heightAnchor.constraint(equalToConstant: 100),
-            
             productNameLabel.topAnchor.constraint(equalTo: productImageView.bottomAnchor, constant: 20),
             productNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             productNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
             productDescriptionLabel.topAnchor.constraint(equalTo: productNameLabel.bottomAnchor, constant: 20),
             productDescriptionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             productDescriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            
             enableProductSwitch.topAnchor.constraint(equalTo: productDescriptionLabel.bottomAnchor, constant: 20),
             enableProductSwitch.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            
             enableProductLabel.centerYAnchor.constraint(equalTo: enableProductSwitch.centerYAnchor),
             enableProductLabel.leadingAnchor.constraint(equalTo: enableProductSwitch.trailingAnchor, constant: 8)
         ])
     }
-    
 }
 
 extension UIView {

@@ -9,5 +9,4 @@ import Foundation
 
 protocol DigioStoreServiceProtocol {
     func fetchDigioStore(completion: @escaping (Result<DigioStore, Error>) -> Void)
-    
 }
