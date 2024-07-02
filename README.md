@@ -31,12 +31,13 @@ Tive contato com VIP, mas muito pouco, então decidi fazer usando algo que vi ma
 
 - `HomeView.swift`: Configura os componentes da interface do usuário que aparece logo que o projeto builda.
 - `ProductDetailView.swift`: Configura views que aparecem ao clicar nas imagens da sessao de produtos da Home trazendo detalhes do produto. 
-- `BottonSheetView.swift`: Configura os componentes de uma Bootonsheet que sobe quando o Switch da Tela de ProductDetail fica ligado e o alert que aparece quando esse switch e desligaod pelo usuario. 
+- `BottonSheetView.swift`: Configura os componentes de uma Bootonsheet que sobe quando o Switch da Tela de ProductDetail fica ligado e o alert que aparece quando esse switch e desligado pelo usuario. 
 - `SpotlightCell.swift` e `ProductCell.swift`: Células customizadas usadas nas `UICollectionView`s dentro da HomeView para criar carrosel horizontal de imagens na primeira(SpotlightCell) e ultima sessao da Home (ProductCell).
 
 ### ViewModel
 
 `HomeViewModel.swift`: Contém a lógica de apresentação e comunica-se com o serviço para buscar dados.
+`ProductDetailViewModel.swift`: Contém a lógica de apresentação e comunica-se com o serviço para buscar dados. 
 
 ### Coordinator
 
