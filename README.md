@@ -196,14 +196,15 @@ Depois de atualizar o PATH, verifique se o SwiftLint está acessível:
 Isso deve retornar /opt/homebrew/bin/swiftlint.
        
    
-Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode
-    Para garantir que o SwiftLint é executado corretamente ao buildar seu projeto no Xcode, atualize o script de fase de construção para usar o caminho completo:
-        1. No navegador de projetos, selecione seu projeto.
-        2. Selecione o seu alvo (target) na lista de alvos.
-        3. Vá para a aba Build Phases.
-        4. Clique no botão "+" no canto superior esquerdo e selecione New Run Script Phase.
-        5. Arraste a nova fase de execução para que fique abaixo de Compile Sources e acima de Link Binary With Libraries.
-        6. No campo de script da nova fase de execução, adicione o seguinte:
+### Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode:
+
+- Para garantir que o SwiftLint é executado corretamente ao buildar seu projeto no Xcode, atualize o script de fase de construção para usar o caminho completo:
+- No navegador de projetos, selecione seu projeto.
+- Selecione o seu alvo (target) na lista de alvos.
+- Vá para a aba Build Phases.
+- Clique no botão "+" no canto superior esquerdo e selecione New Run Script Phase.
+- Arraste a nova fase de execução para que fique abaixo de Compile Sources e acima de Link Binary With Libraries.
+- No campo de script da nova fase de execução, adicione o seguinte:
     
         ```
         if [ -x /opt/homebrew/bin/swiftlint ]; then
@@ -213,8 +214,8 @@ Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode
         Fi 
         ```
    
-    Reiniciar o Xcode
-    Após atualizar o script de fase de construção, reinicie o Xcode para garantir que as alterações sejam aplicadas.
-    Verificar o Funcionamento
-        1. Faça uma limpeza do projeto no Xcode (`Cmd + Shift + K`).
-        2. Recompile o projeto (`Cmd + B`).  
+### Reiniciar o Xcode
+- Após atualizar o script de fase de construção, reinicie o Xcode para garantir que alterações sejam aplicadas.
+- Verificar o Funcionamento:
+    - Faça uma limpeza do projeto no Xcode (`Cmd + Shift + K`).
+    - Recompile o projeto (`Cmd + B`).  
