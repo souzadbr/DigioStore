@@ -188,10 +188,12 @@ Dependendo do shell que voce esta usando (Bash, Zsh, etc) voce precisa editar o 
    ``` echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.bash_profile ```
    
 - Verificando o PATH:
-    Depois de atualizar o PATH, verifique se o SwiftLint está acessível:
+    
+Depois de atualizar o PATH, verifique se o SwiftLint está acessível:
     
     ```which swiftlint ```
-    Isso deve retornar /opt/homebrew/bin/swiftlint.
+    
+Isso deve retornar /opt/homebrew/bin/swiftlint.
        
    
 Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode
@@ -207,7 +209,8 @@ Agora dentro do Xcode vamos atualizar o Script de Fase de Construção no Xcode
         /opt/homebrew/bin/swiftlint
       else
         echo "warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint"
-        Fi ```
+        Fi 
+        ```
    
     Reiniciar o Xcode
     Após atualizar o script de fase de construção, reinicie o Xcode para garantir que as alterações sejam aplicadas.
